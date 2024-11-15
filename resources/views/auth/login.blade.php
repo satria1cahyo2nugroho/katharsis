@@ -54,6 +54,8 @@
     <!-- boostrap v.5.3 -->
     <link rel="stylesheet" href="{{ asset('landpage/bootstrap/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('landpage/costcss/style.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <title>Login</title>
 </head>
 
@@ -89,8 +91,12 @@
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label">Password</label>
-                                            <input type="password" name="password" class="form-control"
-                                                placeholder="*******" />
+                                            <div class="input-group">
+                                                <input id="pw-input" type="password" name="password"
+                                                    class="form-control" placeholder="*******" />
+                                                <button class="btn btn-outline-primary" type="button"
+                                                    id="togglePassword"><i class="bi bi-eye-slash"></i></button>
+                                            </div>
                                             <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                         </div>
                                         <div class="d-grid">
@@ -124,5 +130,21 @@
 <script src="{{ asset('landpagebootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('landpagejquery/jquery3.7.1.min.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{{-- password --}}
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function() {
+        var passwordField = document.getElementById('pw-input');
+        var toggleButton = document.getElementById('togglePassword');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            toggleButton.innerHTML = '<i class="bi bi-eye"></i>';
+            // Change icon to show it is now visible 
+        } else {
+            passwordField.type = 'password';
+            toggleButton.innerHTML = '<i class="bi bi-eye-slash"></i>';
+            // Change icon to show it is now hidden 
+        }
+    });
+</script>
 
 </html>

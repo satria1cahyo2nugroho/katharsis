@@ -18,13 +18,13 @@
                     </x-nav-link>
                     @if (Auth::check())
                         @if (Auth::user()->hasRole('admin'))
-                            <x-nav-link :href="route('admin')" :active="request()->routeIs('admin')">
+                            <x-nav-link :href="route('tiket-view')" :active="request()->routeIs('tiket-view')">
                                 {{ __('TIKET') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('setting')" :active="request()->routeIs('setting')">
+                            <x-nav-link :href="route('user-view')" :active="request()->routeIs('user-view')">
                                 {{ __('USER') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('setting')" :active="request()->routeIs('setting')">
+                            <x-nav-link :href="route('client-view')" :active="request()->routeIs('client-view')">
                                 {{ __('CLIENT') }}
                             </x-nav-link>
                         @elseif (Auth::user()->hasRole('pengunjung'))

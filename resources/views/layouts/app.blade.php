@@ -12,6 +12,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('landpage/bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -36,5 +38,39 @@
         </main>
     </div>
 </body>
+<footer class="bg-white">
+    <div class="container-fluid bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('landpage/assets/KH.png') }}" alt="khatarsis" width="50" height="50" />
+                    <span class="text">&copy; KHATARSIS 2024</span>
+                </a>
+
+                <span class="navbar-text">
+                    <div class="hstack gap-2">
+                        <button class="btn">
+                            <i class="bi bi-instagram"></i>
+                        </button>
+                        <div class="vr"></div>
+                        <button class="btn">
+                            <i class="bi bi-twitter-x"></i>
+                        </button>
+                        <div class="vr"></div>
+                        <button class="btn">
+                            <i class="bi bi-facebook"></i>
+                        </button>
+                        <div class="vr"></div>
+                        <button class="btn">
+                            <i class="bi bi-whatsapp"></i>
+                        </button>
+                    </div>
+                </span>
+            </div>
+    </div>
+</footer>
+<script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- jquery -->
+<script src=" {{ asset('landpage/jquery/jquery3.7.1.min.js') }}"></script>
 
 </html>
