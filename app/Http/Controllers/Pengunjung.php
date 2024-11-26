@@ -22,7 +22,8 @@ class Pengunjung extends Controller
     public function detail_tik(Request $request, $id)
     {
         $tikets = Tiket::find($id);
+        $tikett = Tiket::all();
 
-        return view('pengunjung.tiket.beli', compact('tikets'));
+        return view('pengunjung.tiket.beli', compact('tikets', 'tikett'));
     }
 }
