@@ -10,7 +10,7 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
             @foreach ($tiket as $t)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>

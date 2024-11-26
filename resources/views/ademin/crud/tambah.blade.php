@@ -90,6 +90,31 @@
                                                     </div>
                                                 @enderror
                                             </div>
+                                            <div class="row justify-content-around">
+                                                <div class="col">
+                                                    <div class="m-3">
+                                                        <label for="user_id" class="form-label">NAMA CLIENT</label>
+                                                        <select name="user_id" class="form-select"
+                                                            aria-label="Default select example">
+                                                            <option value="" disabled selected>Silahkan Pilih
+                                                                Client
+                                                            </option>
+                                                            @foreach ($users as $us)
+                                                                <option value="{{ $us->id }}">{{ $us->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        @error('user_id')
+                                                            <div class="alert alert-danger" role="alert">
+                                                                {{ $message }}
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
                                             <div class="mb-3">
                                                 <label for="exampleFormControlTextarea1"
                                                     class="form-label">Deskripsi</label>

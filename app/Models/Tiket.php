@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 class Tiket extends Model
 {
@@ -17,6 +18,11 @@ class Tiket extends Model
         'harga',
         'deskripsi',
         'image',
+        'user_id'
 
     ];
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'user_id');
+    }
 }

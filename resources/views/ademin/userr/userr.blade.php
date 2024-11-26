@@ -28,9 +28,14 @@
                 <div class="container flex-auto">
                     <div class="card">
                         <div class="card-header">
-                            <div class="">
-                                <a href="{{ route('tambah-user') }}" class="btn btn-primary" type="button">Tambah
-                                    user</a>
+                            <div class="row">
+                                <div class="col">
+                                    <a href="{{ route('tambah-user') }}" class="btn btn-primary" type="button">Tambah
+                                        user</a>
+                                </div>
+                                <div class="col"></div>
+                                <div class="col"><input class="form-control" id="myInput" type="text"
+                                        placeholder="Search.."></div>
                             </div>
                         </div>
 
@@ -52,5 +57,16 @@
 <!-- <script src="bootstrap/js/bootstrap.js"></script> -->
 <!-- jquery -->
 <script src=" {{ asset('landpage/jquery/jquery3.7.1.min.js') }}"></script>
+{{-- table search --}}
+<script>
+    $(document).ready(function() {
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 
 </html>

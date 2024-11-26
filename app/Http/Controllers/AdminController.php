@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tiket;
 use App\Models\User;
+use App\Models\Tiket;
+// use Image;
 use Illuminate\Http\Request;
+// use Intervention\Image\Image;
+use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Intervention\Image\Laravel\Facades\Image;
+
+
 
 class AdminController extends Controller
 {
@@ -85,10 +92,28 @@ class AdminController extends Controller
         return view('ademin.crud.detail_tiket', compact('tiket'));
     }
 
+    // public function tambah_view()
+    // {
+    //     $pengunjung = User::role('client')->get();
+    //     return view('ademin.crud.tambah', compact('pengunjung'));
+    // }
+    //  view tiket
     public function tambah_view()
     {
-        return view('ademin.crud.tambah');
+        $modelIds = DB::table('model_has_roles')
+            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+            ->where('roles.id', '2')
+            ->pluck('model_has_roles.model_id');
+
+
+        $users = User::whereIn('id', $modelIds)->get();
+
+        return view('ademin.crud.tambah', compact('users'));
     }
+
+
+
+
     // menambahkan tiket
     public function store_tiket(Request $request)
     {
@@ -98,6 +123,7 @@ class AdminController extends Controller
             'harga' => 'required',
             'deskripsi' => 'required',
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            'user_id' => 'required',
         ]);
 
         // if ($validator->failed()) return redirect()->withInput()->withErrors($validator);
@@ -108,6 +134,7 @@ class AdminController extends Controller
         $filename = date('y-m-d') . $photo->getClientOriginalName();
         $path = 'image-tiket/' . $filename;
 
+
         Storage::disk('public')->put($path, file_get_contents($photo));
 
         $tiket['id_tiket'] = $request->id_tiket;
@@ -115,6 +142,8 @@ class AdminController extends Controller
         $tiket['harga'] = $request->harga;
         $tiket['deskripsi'] = $request->deskripsi;
         $tiket['image'] = $filename;
+        $tiket['user_id'] = $request->user_id;
+
 
         Tiket::create($tiket);
 
@@ -317,7 +346,11 @@ class AdminController extends Controller
     // clienrt
     public function client_view()
     {
-
-        return view('ademin.klien.klien');
+        // Fetch tiket_desc records along with user details 
+        $tiketDescs = DB::table('tiket_desc')
+            ->join('users', 'tiket_desc.user_id', '=', 'users.id')
+            ->select('tiket_desc.*', 'users.name as user_name')
+            ->get();
+        return view('ademin.klien.klien', compact('tiketDescs'));
     }
 }

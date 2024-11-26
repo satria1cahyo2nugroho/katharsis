@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Pengunjung;
 use App\Http\Controllers\ProfileController;
 
 /*
@@ -54,11 +55,19 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::put('/update-user/{id}', [AdminController::class, 'update_user'])->name('user-update');
     // delete user 
     Route::delete('/delete-user/{id}', [AdminController::class, 'delete_user'])->name('user-delete');
+
+    // client view daya
 });
 
-Route::get('pengunung', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'role:pengunjung'])->name('pegunug');
+
+
+// pengunjung
+Route::middleware(['auth', 'verified', 'role:pengunjung'])->group(
+    function () {
+        Route::get('/tiket', [Pengunjung::class, 'tiket'])->name('tiket');
+        Route::get('/tiket-detail/{id}', [Pengunjung::class, 'detail_tik'])->name('tiket-beli');
+    }
+);
 Route::get('miaw', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'role:pengunjung'])->name('miaw');

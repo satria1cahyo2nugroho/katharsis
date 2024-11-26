@@ -28,8 +28,8 @@
                                 {{ __('CLIENT') }}
                             </x-nav-link>
                         @elseif (Auth::user()->hasRole('pengunjung'))
-                            <x-nav-link :href="route('pegunug')" :active="request()->routeIs('admin')">
-                                {{ __('pegnug') }}
+                            <x-nav-link :href="route('tiket')" :active="request()->routeIs('tiket')">
+                                {{ __('TIKET') }}
                             </x-nav-link>
                             <x-nav-link :href="route('miaw')" :active="request()->routeIs('setting')">
                                 {{ __('miaw') }}
