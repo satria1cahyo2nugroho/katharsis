@@ -36,33 +36,41 @@
                             <div class="card-vody">
                                 <div class="container text-center">
                                     <div class="row">
-                                        <div class="card card-body">
-                                            <div
-                                                class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                                <div class="d-flex justify-content-center align-items-center">
-                                                    <img src="{{ asset('storage/image-tiket/' . $tikets->image) }}"
-                                                        class="img-thumbnail" style="height: 500px; width: 600px;"
-                                                        alt="...">
-                                                </div>
+                                        <form action="{{ route('proses_bayar') }}" method="POST">
+                                            @csrf
+                                            <div class="card card-body">
+                                                <div
+                                                    class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
+                                                    <div class="d-flex justify-content-center align-items-center">
+                                                        <img src="{{ asset('storage/image-tiket/' . $tikets->image) }}"
+                                                            class="img-thumbnail" style="height: 500px; width: 600px;"
+                                                            alt="...">
+                                                    </div>
+                                                    <div class="media-body mt-3">
+                                                        <h5
+                                                            class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
+                                                            {{ __($tikets->name) }}
+                                                        </h5>
 
+                                                        <p class="mb-3">{{ __($tikets->deskripsi) }}</p>
+                                                    </div>
 
-                                                <div class="media-body mt-3">
-                                                    <h5 class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                                                        {{ __($tikets->name) }}
-                                                    </h5>
-
-                                                    <p class="mb-3">{{ __($tikets->deskripsi) }}</p>
-                                                </div>
-
-                                                <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                                    <h5 class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                                                        {{ __('RP.') }} {{ __($tikets->harga) }}
-                                                    </h5>
-                                                    <a type="button" class="btn btn-primary mt-4 text-white"><span><i
-                                                                class="bi bi-bag"></span></i> BELI</a>
+                                                    <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
+                                                        <h5
+                                                            class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
+                                                            {{ __('RP.') }} {{ __($tikets->harga) }}
+                                                        </h5>
+                                                        <button type="submit" class="btn btn-primary mt-4 text-white">
+                                                            <span><i class="bi bi-bag"></i></span> BELI TIKET </button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                            {{-- <input type="hidden" name="id" value="{{ $tikets->id }}"> --}}
+                                            <input type="hidden" name="produk_id" value="{{ $tikets->id }}">
+                                            <input type="hidden" name="harga" value="{{ $tikets->harga }}">
+                                        </form>
+
+
                                         <div class="card-body">
                                             <div class="container p-3">
                                                 <div class="card">
@@ -90,7 +98,7 @@
                                                         <div class="col mb-2">
                                                             <div class="card" style="width: 18rem;">
                                                                 <img src="{{ asset('storage/image-tiket/' . $item->image) }}"
-                                                                    class="card-img-top"
+                                                                    class="card-img-top mx-auto"
                                                                     style="height: 200px; width: 200px;">
                                                                 <div class="card-body">
                                                                     <h2

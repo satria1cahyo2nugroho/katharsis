@@ -31,9 +31,11 @@
                             <x-nav-link :href="route('tiket')" :active="request()->routeIs('tiket')">
                                 {{ __('TIKET') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('miaw')" :active="request()->routeIs('setting')">
-                                {{ __('miaw') }}
+                            <x-nav-link :href="route('transaksi')" :active="request()->routeIs('transaksi')">
+                                {{ __('Transaksi') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('cetak')" :active="request()->routeIs('cetak')">
+                                {{ __('Cetak-Tiket') }} </x-nav-link>
                         @endif
                     @endif
                 </div>

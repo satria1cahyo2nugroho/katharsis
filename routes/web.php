@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Payment_Controller;
 use App\Http\Controllers\Pengunjung;
 use App\Http\Controllers\ProfileController;
 
@@ -65,7 +66,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:pengunjung'])->group(
     function () {
         Route::get('/tiket', [Pengunjung::class, 'tiket'])->name('tiket');
+        Route::get('/transaksi', [Pengunjung::class, 'detail_transaksi'])->name('transaksi');
+        // Route::get('/tiket-detail/{id}', [Pengunjung::class, 'detail_tik'])->name('tiket-beli');
         Route::get('/tiket-detail/{id}', [Pengunjung::class, 'detail_tik'])->name('tiket-beli');
+        Route::get('/lihat-tiket', [Pengunjung::class, 'lihat_tiket'])->name('cetak');
+
+
+        // transakski
+        Route::post('/checkout', [Payment_Controller::class, 'Checkout'])->name('proses_bayar');
+        Route::get('/bayar/{transaksi}', [Payment_Controller::class, 'bayar'])->name('bayar');
+        Route::get('/bayar/sukses/{transaksi}', [Payment_Controller::class, 'sukses'])->name('sukses-transaksi');
+        Route::get('/re-bayar/{transaksi}', [Payment_Controller::class, 'sukses_2'])->name('sukses-transaksi2');
     }
 );
 Route::get('miaw', function () {

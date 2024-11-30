@@ -3,7 +3,7 @@
         @foreach ($tiket as $item)
             <div class="col mb-2">
                 <div class="card" style="width: 18rem;">
-                    <img src="{{ asset('storage/image-tiket/' . $item->image) }}" class="card-img-top"
+                    <img src="{{ asset('storage/image-tiket/' . $item->image) }}" class="card-img-top mx-auto"
                         style="height: 200px; width: 200px;">
                     <div class="card-body">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
@@ -13,13 +13,14 @@
                             {{ __('RP.') }} {{ __($item->harga) }}
                         </h5>
                         {{-- <p class="card-text mb-1">{{ $item->deskripsi }}</p> --}}
-                        <a href="{{ route('tiket-beli', ['id' => $item->id]) }}" class="btn btn-primary">BELI TIKET
+                        <a href="{{ route('tiket-beli', ['id' => $item->id]) }}" class="btn btn-primary">DETAIL TIKET
                             <span><i class="bi bi-bag"></span></i></a>
                         <a href="#" type="button" data-bs-toggle="modal"
                             data-bs-target="#Modal{{ $item->id }}" class="btn btn-primary">Deskripsi <span><i
                                     class="bi bi-receipt-cutoff"></i></a>
                     </div>
                 </div>
+
             </div>
 
             <!-- Modal -->
