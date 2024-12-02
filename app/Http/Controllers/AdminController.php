@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Tiket;
+use App\Models\Transaksi;
 // use Image;
 use Illuminate\Http\Request;
 // use Intervention\Image\Image;
@@ -352,5 +353,26 @@ class AdminController extends Controller
             ->select('tiket_desc.*', 'users.name as user_name')
             ->get();
         return view('ademin.klien.klien', compact('tiketDescs'));
+    }
+
+
+    public function transaksi_view()
+    {
+        $transaksidecs = DB::table('transaksis')
+            ->join('users', 'transaksis.user_id', '=', 'users.id')
+            ->join('tiket_desc', 'transaksis.produk_id', '=', 'tiket_desc.id')
+            ->select('transaksis.*', 'users.name as user_name', 'tiket_desc.name as tiket_name')
+            ->get();
+
+        return view('ademin.transaksi.transaksi', compact('transaksidecs'));
+    }
+
+    public function ganti_status(Request $request, $id)
+    {
+        $request->validate(['status' => 'required|string|in:pending,success,failed',]);
+        $transaction = Transaksi::findOrFail($id);
+        $transaction->status = $request->input('status');
+        $transaction->save();
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 }

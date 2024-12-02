@@ -14,7 +14,8 @@ class Transaksi extends Model
         'produk_id',
         'harga',
         'status',
-        'snap_token'
+        'snap_token',
+        'sha256'
     ];
 
     // In Transaksi.php (model)

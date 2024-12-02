@@ -26,13 +26,6 @@ class Payment_Controller extends Controller
             return redirect()->back()->with('error', 'Product not found');
         }
 
-        $transaksi = Transaksi::create([
-            'user_id' => Auth::user()->id,
-            'produk_id' => $product->id,
-            'harga' => $product->harga,
-            'status' => 'pending',
-        ]);
-
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
         \Midtrans\Config::$isProduction = false;
         \Midtrans\Config::$isSanitized = true;
@@ -63,7 +56,19 @@ class Payment_Controller extends Controller
         // );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
+
+        $combinedString = Auth::user()->id . $product->id . $product->harga;
+        $sha256Hash = hash('sha256', $combinedString);
+
+        $transaksi = Transaksi::create([
+            'user_id' => Auth::user()->id,
+            'produk_id' => $product->id,
+            'harga' => $product->harga,
+            'status' => 'pending',
+            'sha256' => $sha256Hash,
+        ]);
         $transaksi->snap_token = $snapToken;
+
         $transaksi->save();
 
         return redirect()->route('bayar', $transaksi->id);

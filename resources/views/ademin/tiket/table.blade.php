@@ -1,5 +1,5 @@
 <div class="tabele-responsive">
-    <table class="table table-hover align-middle">
+    <table class="table table-striped table-hover align-middle">
         <thead>
             <tr>
                 <th scope="col">no</th>
@@ -14,10 +14,11 @@
             @foreach ($tiket as $t)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td><img src="{{ asset('storage/image-tiket/' . $t->image) }}" alt="" width="150"></td>
+                    <td><img src="{{ asset('storage/image-tiket/' . $t->image) }}" style="height: 150px; width: 250px;">
+                    </td>
                     <td>{{ $t->id_tiket }}</td>
                     <td>{{ $t->name }}</td>
-                    <td>{{ $t->harga }}</td>
+                    <td>Rp{{ number_format($t->harga, 0, ',', '.') }}</td>
                     <td>
                         <div class="d-grid gap-2 d-md-block">
                             <a href="{{ route('detail-tiket', ['id' => $t->id]) }}" class="btn btn-info"

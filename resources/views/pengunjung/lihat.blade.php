@@ -39,67 +39,68 @@
                 <div class="container flex-auto">
                     <div class="card">
                         <div class="card-header">
-
                             <div class="row">
                                 <div class="col-md-12">
                                     <h1>CETAK-TIKET</h1>
-                                    <div class="row mt-3">
-                                        <div class="col-md-12">
-                                            <div class="table-container">
-                                                <div class="table-responsive" id="myTable">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="table-container">
+                                        <div class="table-responsive" id="myTable">
 
-                                                    @if ($tiket_lihat->isEmpty())
-                                                        <p>Tidak ada transaksi ditemukan.</p>
-                                                    @else
-                                                        <table class="table table-striped table-hover">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>NO</th>
-                                                                    <th>Produk</th>
-                                                                    <th>Harga</th>
-                                                                    <th>Status</th>
-                                                                    <th>Cetak Tiket</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($tiket_lihat as $index => $transaction)
-                                                                    <tr>
-                                                                        <th scope="row">{{ $index + 1 }}</th>
-                                                                        <td>{{ $transaction->produkk->name }}</td>
-                                                                        <td>Rp{{ number_format($transaction->produkk->harga, 0, ',', '.') }}
-                                                                        </td>
-                                                                        <td>
-                                                                            @if ($transaction->status == 'pending')
-                                                                                <span
-                                                                                    class="badge bg-warning text-dark">{{ $transaction->status }}</span>
-                                                                            @elseif($transaction->status == 'success')
-                                                                                <span
-                                                                                    class="badge bg-success">{{ $transaction->status }}</span>
-                                                                            @else
-                                                                                <span
-                                                                                    class="badge bg-danger">{{ $transaction->status }}</span>
-                                                                            @endif
-                                                                        </td>
-                                                                        <td> <button
-                                                                                class="btn btn-primary">CETAK-TIKET</button>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    @endif
-                                                </div>
-                                            </div>
-
-                                            <div class="text-center">
-                                                <nav aria-label="Page navigation example">
-                                                    <ul class="pagination justify-content-center" id="pagination">
-                                                    </ul>
-                                                </nav>
-                                            </div>
-
+                                            @if ($tiket_lihat->isEmpty())
+                                                <p>Tidak ada transaksi ditemukan.</p>
+                                            @else
+                                                <table class="table table-striped table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>NO</th>
+                                                            <th>Produk</th>
+                                                            <th>Harga</th>
+                                                            <th>Status</th>
+                                                            <th>Cetak Tiket</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($tiket_lihat as $index => $transaction)
+                                                            <tr>
+                                                                <th scope="row">{{ $index + 1 }}</th>
+                                                                <td>{{ $transaction->produkk->name }}</td>
+                                                                <td>Rp{{ number_format($transaction->produkk->harga, 0, ',', '.') }}
+                                                                </td>
+                                                                <td>
+                                                                    @if ($transaction->status == 'pending')
+                                                                        <span
+                                                                            class="badge bg-warning text-dark">{{ $transaction->status }}</span>
+                                                                    @elseif($transaction->status == 'success')
+                                                                        <span
+                                                                            class="badge bg-success">{{ $transaction->status }}</span>
+                                                                    @else
+                                                                        <span
+                                                                            class="badge bg-danger">{{ $transaction->status }}</span>
+                                                                    @endif
+                                                                </td>
+                                                                <td> <button
+                                                                        class="btn btn-primary">CETAK-TIKET</button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            @endif
                                         </div>
                                     </div>
+
+                                    <div class="text-center">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination justify-content-center" id="pagination">
+                                            </ul>
+                                        </nav>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

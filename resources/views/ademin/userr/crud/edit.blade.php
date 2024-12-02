@@ -111,30 +111,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row justify-content-around">
-                                            <div class="col">
-                                                <div class="m-3">
-                                                    <label for="exampleFormControlInput1"
-                                                        class="form-label">Role</label>
-                                                    <select name="role" class="form-select"
-                                                        aria-label="Default select example">
-                                                        <option value="" disabled selected>Silahkan Pilih Role
-                                                        </option>
-                                                        @foreach ($roles as $role)
-                                                            <option value="{{ $role->name }}"
-                                                                {{ $data->roles->first()->name == $role->name ? 'selected' : '' }}>
-                                                                {{ $role->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('role')
-                                                        <div class="alert alert-danger" role="alert">
-                                                            {{ $message }}
-                                                        </div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                 </div>
                             </div>

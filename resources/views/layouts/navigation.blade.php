@@ -27,6 +27,9 @@
                             <x-nav-link :href="route('client-view')" :active="request()->routeIs('client-view')">
                                 {{ __('CLIENT') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('transaksi-view')" :active="request()->routeIs('transaksi-view')">
+                                {{ __('Transaksi') }}
+                            </x-nav-link>
                         @elseif (Auth::user()->hasRole('pengunjung'))
                             <x-nav-link :href="route('tiket')" :active="request()->routeIs('tiket')">
                                 {{ __('TIKET') }}

@@ -24,48 +24,36 @@ class Pengunjung extends Controller
     }
 
 
-    public function detail_transaksi()
-    {
-
-        $transactions = Transaksi::where('user_id', Auth::user()->id)->get();
-        $transactions->transform(function ($transaction, $key) {
-            $transaction->product = Tiket::find($transaction->produk_id);
-            return $transaction;
-        });
-
-        return view('pengunjung.transaksi', compact('transactions'));
-    }
     // public function detail_transaksi()
     // {
-    //     $transactions = Transaksi::where('user_id', Auth::user()->id)->get();
 
+    //     $transactions = Transaksi::where('user_id', Auth::user()->id)->get();
     //     $transactions->transform(function ($transaction, $key) {
     //         $transaction->product = Tiket::find($transaction->produk_id);
-    //         if ($transaction->product) {
-    //             $transaction->harga = $transaction->product->harga; // Include the harga field
-    //         } else {
-    //             $transaction->harga = 'Product not found';
-    //         }
     //         return $transaction;
     //     });
 
     //     return view('pengunjung.transaksi', compact('transactions'));
     // }
 
+    public function detail_transaksi()
+    {
+        $transactions = Transaksi::where('user_id', Auth::user()->id)->get();
 
-    // public function detail_tiket(Request $request, $id)
-    // {
-    //     $tike = Tiket::find($id);
-    //     return view('pengunjung.tiket.beli', compact('tike'));
-    // }
+        if ($transactions->isEmpty()) {
+            // Optionally, you can set a flag or a variable to indicate no transactions found
+            $noTransactions = true;
+            return view('pengunjung.transaksi', compact('transactions', 'noTransactions'));
+        }
 
-    // public function detail_tik(Request $request, $id)
-    // {
-    //     $tikets = Tiket::find($id);
-    //     $tikett = Tiket::all();
+        $transactions->transform(function ($transaction) {
+            $transaction->product = Tiket::find($transaction->produk_id);
+            return $transaction;
+        });
 
-    //     return view('pengunjung.tiket.beli', compact('tikets', 'tikett'));
-    // }
+        return view('pengunjung.transaksi', compact('transactions'));
+    }
+
 
 
     public function lihat_tiket(Request $request)

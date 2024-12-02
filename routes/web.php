@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/tiket', [AdminController::class, 'view_tiket'])->name('tiket-view');
     Route::get('/admin/user', [AdminController::class, 'user_view'])->name('user-view');
     Route::get('/admin/klien', [AdminController::class, 'client_view'])->name('client-view');
+    Route::get('/admin/transaksi', [AdminController::class, 'transaksi_view'])->name('transaksi-view');
 });
 
 // action for CRUD for ADMIN
@@ -57,7 +58,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     // delete user 
     Route::delete('/delete-user/{id}', [AdminController::class, 'delete_user'])->name('user-delete');
 
-    // client view daya
+    // change status riwayat transaksi
+    Route::delete('/ganti-status/{id}', [AdminController::class, 'ganti_status'])->name('ganti-status');
 });
 
 
