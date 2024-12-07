@@ -1,10 +1,12 @@
 <?php
 
+use GuzzleHttp\Client;
+use App\Http\Controllers\Pengunjung;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Payment_Controller;
-use App\Http\Controllers\Pengunjung;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Payment_Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,9 +83,13 @@ Route::middleware(['auth', 'verified', 'role:pengunjung'])->group(
         Route::get('/re-bayar/{transaksi}', [Payment_Controller::class, 'sukses_2'])->name('sukses-transaksi2');
     }
 );
-Route::get('miaw', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'role:pengunjung'])->name('miaw');
+
+// client
+
+Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
+    Route::get('/sales', [ClientController::class, 'plotSales'])->name('index');
+});
+
 
 // profile
 Route::middleware('auth')->group(function () {

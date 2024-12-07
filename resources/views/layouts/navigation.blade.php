@@ -39,6 +39,10 @@
                             </x-nav-link>
                             <x-nav-link :href="route('cetak')" :active="request()->routeIs('cetak')">
                                 {{ __('Cetak-Tiket') }} </x-nav-link>
+                        @elseif (Auth::user()->hasRole('client'))
+                            <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                                {{ __('Sales') }}
+                            </x-nav-link>
                         @endif
                     @endif
                 </div>

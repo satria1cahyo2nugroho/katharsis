@@ -307,11 +307,8 @@
 </nav>
 </div>
 <!-- boostrap js 5.3 -->
-<!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
 <script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-<!-- <script src="bootstrap/js/bootstrap.js"></script> -->
 <!-- jquery -->
 <script src=" {{ asset('landpage/jquery/jquery3.7.1.min.js') }}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </html>
