@@ -63,6 +63,7 @@ class Payment_Controller extends Controller
         $transaksi = Transaksi::create([
             'user_id' => Auth::user()->id,
             'produk_id' => $product->id,
+            'nama' => $product->name,
             'harga' => $product->harga,
             'status' => 'pending',
             'sha256' => $sha256Hash,

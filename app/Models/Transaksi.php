@@ -14,6 +14,7 @@ class Transaksi extends Model
     protected $fillable = [
         'user_id',
         'produk_id',
+        'nama',
         'harga',
         'status',
         'snap_token',

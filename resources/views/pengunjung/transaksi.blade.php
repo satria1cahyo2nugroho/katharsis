@@ -65,7 +65,7 @@
                                                         @forelse ($transactions as $transaction)
                                                             <tr>
                                                                 <th scope="row">{{ $loop->iteration }}</th>
-                                                                <td>{{ $transaction['product']['name'] }}</td>
+                                                                <td>{{ $transaction['product']['nama'] }}</td>
                                                                 <td>Rp{{ number_format($transaction['product']['harga'], 0, ',', '.') }}
                                                                 </td>
                                                                 <td>

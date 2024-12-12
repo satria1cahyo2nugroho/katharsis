@@ -68,8 +68,8 @@
                                                         @foreach ($tiket_lihat as $index => $transaction)
                                                             <tr>
                                                                 <th scope="row">{{ $index + 1 }}</th>
-                                                                <td>{{ $transaction->produkk->name }}</td>
-                                                                <td>Rp{{ number_format($transaction->produkk->harga, 0, ',', '.') }}
+                                                                <td>{{ $transaction->nama }}</td>
+                                                                <td>Rp{{ number_format($transaction->harga, 0, ',', '.') }}
                                                                 </td>
                                                                 <td>
                                                                     @if ($transaction->status == 'pending')

@@ -47,7 +47,7 @@ class Pengunjung extends Controller
         }
 
         $transactions->transform(function ($transaction) {
-            $transaction->product = Tiket::find($transaction->produk_id);
+            $transaction->product = Transaksi::find($transaction->id);
             return $transaction;
         });
 
