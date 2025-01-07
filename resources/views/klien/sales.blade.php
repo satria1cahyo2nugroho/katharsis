@@ -35,7 +35,7 @@
             <div class="content mt-5">
                 <div class="container flex-auto">
                     <div class="card p-3">
-                        <div class="card">
+                        {{-- <div class="card">
                             <div class="card-header">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -48,7 +48,7 @@
                                     <div id="myPlot" style="width:100%"></div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="card p-3">
                             <div class="card">
                                 <div class="card-header">
@@ -132,9 +132,9 @@
         <script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('landpage/jquery/jquery3.7.1.min.js') }}"></script>
         {{-- plot --}}
-        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        {{-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> --}}
         {{-- plot --}}
-        <script>
+        {{-- <script>
             const xArray = {!! json_encode($dates) !!};
             const yArray = {!! json_encode($totals) !!};
             // Define Data 
@@ -156,7 +156,7 @@
 
             // Display using Plotly
             Plotly.newPlot("myPlot", data, layout);
-        </script>
+        </script> --}}
         {{-- chart --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
@@ -180,7 +180,7 @@
                     },
                     title: {
                         display: true,
-                        text: "World Wine Production 2018"
+                        text: "TRANSAKSI BULANAN"
                     }
                 }
             });

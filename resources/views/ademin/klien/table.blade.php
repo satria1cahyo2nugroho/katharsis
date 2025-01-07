@@ -41,7 +41,7 @@
         <thead>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">User Name</th>
+                <th scope="col">Nama klien</th>
                 <th scope="col">Tiket ID</th>
                 <th scope="col">Tiket Name</th>
                 <th scope="col">Harga</th>

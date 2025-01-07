@@ -142,9 +142,53 @@
     <link rel="stylesheet" href="{{ asset('landpage/costcss/style.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <title>Khatarsis</title>
+    <style>
+        .showcase-img img {
+            width: 100%;
+            /* max-width: 30rem; */
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            /* Center the image horizontally */
+        }
+    </style>
+    {{-- footer  --}}
+    <style>
+        .footer {
+            background-color: #343a40;
+            /* Dark background color */
+            color: #ffffff;
+            /* White text color */
+            padding: 20px 0;
+        }
+
+        .footer a {
+            color: #ffffff;
+        }
+
+        .footer a:hover {
+            color: #dddddd;
+        }
+
+        .footer .navbar-brand img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .footer .social-icons .btn {
+            color: #ffffff;
+            border-radius: 50%;
+        }
+
+        .footer .social-icons .btn:hover {
+            color: #007bff;
+            /* Bootstrap primary color */
+        }
+    </style>
 </head>
 
 <body>
+    {{-- navbar --}}
     <section>
         <div class="container-fluid bg-body-tertiary">
             <nav class="navbar navbar-expand-lg">
@@ -161,15 +205,83 @@
                     <div class="collapse navbar-collapse" id="navbarText">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link"
+                                    onclick="document.getElementById('home').scrollIntoView({behavior: 'smooth'});">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">About</a>
+                                <a class="nav-link"
+                                    onclick="document.getElementById('tiket').scrollIntoView({behavior: 'smooth'});">Tiket</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="">Contact</a>
+                                <a class="nav-link"
+                                    onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'});">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Contact</a>
+                                <!-- Corrected here -->
                             </li>
                         </ul>
+
+                        <!-- Modal About -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row mb-3 align-items-center"> <label for="staticEmail"
+                                                class="col-sm-3 col-form-label d-flex align-items-center"> <i
+                                                    class="bi bi-envelope-at-fill fs-3 me-2"></i>
+                                                <b>Email:</b>
+                                            </label>
+                                            <div class="col-sm-7"> <input type="text" readonly
+                                                    class="form-control-plaintext" id="staticEmail"
+                                                    value="email@example.com"> </div>
+                                            <div class="col-sm-2"> <button class="btn btn-primary"
+                                                    onclick="copyText('staticEmail')">Copy</button> </div>
+                                        </div>
+                                        <div class="row mb-3 align-items-center"> <label for="staticEmail"
+                                                class="col-sm-3 col-form-label d-flex align-items-center"> <i
+                                                    class="bi bi-geo-alt fs-3 me-2"></i>
+                                                <b>Alamat:</b>
+                                            </label>
+                                            <div class="col-sm-7"> <input type="text" readonly
+                                                    class="form-control-plaintext" id="staticEmail"
+                                                    value="jalan tegal no 21, pangeran DT.NK "> </div>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-primary" onclick="openLink()">Map</button>
+                                                <a id="hiddenLink" href="https://www.google.com/maps" target="_blank"
+                                                    style="display: none;">Hidden Link</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- map --}}
+                                    <script>
+                                        function openLink() {
+                                            document.getElementById('hiddenLink').click();
+                                        }
+                                    </script>
+                                    {{-- email copy --}}
+                                    <script>
+                                        function copyText(inputId) {
+                                            var input = document.getElementById(inputId);
+                                            var tempInput = document.createElement("input");
+                                            tempInput.value = input.value;
+                                            document.body.appendChild(tempInput);
+                                            tempInput.select();
+                                            document.execCommand("copy");
+                                            document.body.removeChild(tempInput);
+                                            alert("Copied the text: " + input.value);
+                                        }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
                         <span class="navbar-text">
                             <div class="hstack gap-2">
                                 <button class="btn">
@@ -193,10 +305,11 @@
                 </div>
             </nav>
         </div>
-        <!-- end nacbar -->
+        <!-- end navbar -->
     </section>
-    {{-- <hr class="hr" /> --}}
-    <div class="container py-5 h-100">
+
+
+    <div class="container py-5 h-100" id="home">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-xl-10">
                 <div class="card" style="border-radius: 1rem">
@@ -220,92 +333,151 @@
             </div>
         </div>
     </div>
-</body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="bootstrap" viewBox="0 0 118 94">
+            <title>Bootstrap</title>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z">
+            </path>
+        </symbol>
+        <symbol id="arrow-right-short" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
+        </symbol>
+        <symbol id="check2-circle" viewBox="0 0 16 16">
+            <path
+                d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+            <path
+                d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+        </symbol>
+    </svg>
 
-
-<!-- jumbutron -->
-<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
-    <symbol id="bootstrap" viewBox="0 0 118 94">
-        <title>Bootstrap</title>
-        <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z">
-        </path>
-    </symbol>
-    <symbol id="arrow-right-short" viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-            d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z" />
-    </symbol>
-    <symbol id="check2-circle" viewBox="0 0 16 16">
-        <path
-            d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
-        <path
-            d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
-    </symbol>
-</svg>
-
-<div class="container my-5">
-    <div class="p-5 text-center bg-body-tertiary rounded-3">
-        <img src="{{ asset('landpage/assets/logo2.png') }}" class="rounded img-fluid" alt="..." />
-        <h1 class="text-body-emphasis">APA ITU KHATARSIS ??</h1>
-        <p class="col-lg-8 mx-auto fs-5 text-muted">
-            Khatarsis adalah sebuah sarana untuk anda menjual tiket sebuah event dengan sekala kecil
-            seperti acara
-            <code>Jalan Santai,jejepangan,Korea,</code>dsb. dengan adanya khatarsis semuanya bisa lebih mudah.
-        </p>
-        <div class="d-inline-flex gap-2 mb-5">
-            @if (Route::has('login'))
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+    <!-- About Section -->
+    <div class="container my-5" id="about">
+        <div class="p-5 text-center bg-body-tertiary rounded-3"> <img src="{{ asset('landpage/assets/logo2.png') }}"
+                class="rounded img-fluid" alt="..." />
+            <h1 class="text-body-emphasis">APA ITU KHATARSIS ??</h1>
+            <p class="col-lg-8 mx-auto fs-5 text-muted"> Khatarsis adalah sebuah sarana untuk anda menjual tiket sebuah
+                event dengan sekala kecil seperti acara <code>Jalan Santai,jejepangan,Korea,</code> dsb. dengan adanya
+                khatarsis semuanya bisa lebih mudah. </p>
+            <div class="d-inline-flex gap-2 mb-5">
+                @if (Route::has('login')) @auth <a
+                        href="{{ url('/dashboard') }}"
+                        class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                        Dashboard </a>
                 @else
                     <a href="{{ route('login') }}"
-                        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill" type="button">
-                        LOG IN
-                        <svg class="bi ms-2" width="24" height="24">
-                            <use xlink:href="#arrow-right-short" />
-                        </svg></a>
-
+                        class="d-inline-flex align-items-center btn btn-primary btn-lg px-4 rounded-pill"> LOG IN <svg
+                            class="bi ms-2" width="24" height="24">
+                            <use xlink:href="#arrow-right-short"></use>
+                        </svg> </a>
                     @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill"
-                            type="button">Register</a>
-                    @endif
-                @endauth
-            @endif
+                        <a href="{{ route('register') }}" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+                            Register </a>
+                    @endif @endauth
+                @endif
+            </div>
         </div>
     </div>
-</div>
+    <!-- Ticket Section -->
 
-<div class="container-fluid bg-body-tertiary">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="{{ asset('landpage/assets/KH.png') }}" alt="khatarsis" width="50" height="50" />
-                <span class="text">&copy; KHATARSIS 2024</span>
-            </a>
-
-            <span class="navbar-text">
-                <div class="hstack gap-2">
-                    <button class="btn">
-                        <i class="bi bi-instagram"></i>
-                    </button>
-                    <div class="vr"></div>
-                    <button class="btn">
-                        <i class="bi bi-twitter-x"></i>
-                    </button>
-                    <div class="vr"></div>
-                    <button class="btn">
-                        <i class="bi bi-facebook"></i>
-                    </button>
-                    <div class="vr"></div>
-                    <button class="btn">
-                        <i class="bi bi-whatsapp"></i>
-                    </button>
+    <section class="showcase bg-light" id="tiket">
+        <div class="container text-center">
+            <div class="container p-3">
+                <div class="card">
+                    <div class="card-header">
+                        Khatarsis
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote m-2">
+                            <h1> Tiket Yang sedang dijual </h1>
+                            <footer class="blockquote-footer mt-2">Range <cite title="Source Title">54Hz+</cite>
+                            </footer>
+                        </blockquote>
+                    </div>
                 </div>
-            </span>
+            </div>
+            <div class="row mt-3">
+                @foreach ($tiket->take(4) as $item)
+                    <div class="col-lg-3">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="d-flex"> <img src="{{ asset('storage/image-tiket/' . $item->image) }}"
+                                    class="card-img-top mx-auto" style="height: 300px; width: 300px;"> </div>
+                            <h3> {{ __($item->name) }}</h3>
+                            <p class="lead mb-0">{{ $item->deskripsi }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
-</div>
-</nav>
-</div>
+        <div class="container-fluid p-5">
+            <div class="container p-3">
+                <div class="card">
+                    <div class="card-header">
+                        Khatarsis
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote m-2">
+                            <h1> Event Yang Akan Datang</h1>
+                            <footer class="blockquote-footer mt-2">Range <cite title="Source Title">54Hz+</cite>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0">
+                <div class="col-lg-6 order-lg-2 showcase-img">
+                    <img src="{{ asset('landpage/assets/image/q.jpg') }}" alt="Placeholder Image">
+                </div>
+                <div
+                    class="col-lg-6 order-lg-1 my-auto showcase-text d-flex flex-column justify-content-center align-items-center text-center">
+                    <h2>Fully</h2>
+                    <p class="lead mb-0">Lore Ippsumx</p>
+                </div>
+            </div>
+            <div class="row g-0">
+                <div class="col-lg-6 showcase-img">
+                    <img src="{{ asset('landpage/assets/image/w.jpg') }}" alt="Placeholder Image">
+                </div>
+                <div
+                    class="col-lg-6 my-auto showcase-text d-flex flex-column justify-content-center align-items-center text-center">
+                    <h2>Updated</h2>
+                    <p class="lead mb-0">lore ipsum</p>
+                </div>
+            </div>
+            <div class="row g-0">
+                <div class="col-lg-6 order-lg-2 showcase-img">
+                    <img src="{{ asset('landpage/assets/image/e.jpg') }}" alt="Placeholder Image">
+                </div>
+                <div
+                    class="col-lg-6 order-lg-1 my-auto showcase-text d-flex flex-column justify-content-center align-items-center text-center">
+                    <h2>HJK</h2>
+                    <p class="lead mb-0">sadjhkajwhd</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center text-md-start mb-3 mb-md-0"> <a
+                    class="navbar-brand d-flex align-items-center" href="#"> <img
+                        src="{{ asset('landpage/assets/KH.png') }}" alt="khatarsis"> <span class="ms-2">&copy;
+                        KHATARSIS 2024</span> </a> </div>
+            <div class="col-md-4 text-center mb-3 mb-md-0"> <span>Follow us on:</span> </div>
+            <div class="col-md-4 text-center text-md-end">
+                <div class="social-icons d-inline-flex gap-3"> <a href="#" class="btn btn-outline-light"> <i
+                            class="bi bi-instagram"></i> </a> <a href="#" class="btn btn-outline-light"> <i
+                            class="bi bi-twitter-x"></i> </a> <a href="#" class="btn btn-outline-light"> <i
+                            class="bi bi-facebook"></i> </a> <a href="#" class="btn btn-outline-light"> <i
+                            class="bi bi-whatsapp"></i> </a> </div>
+            </div>
+        </div>
+    </div>
+</footer>
 <!-- boostrap js 5.3 -->
 <script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- jquery -->

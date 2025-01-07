@@ -83,8 +83,8 @@
                                                                             class="badge bg-danger">{{ $transaction->status }}</span>
                                                                     @endif
                                                                 </td>
-                                                                <td> <button
-                                                                        class="btn btn-primary">CETAK-TIKET</button>
+                                                                <td> <a href="{{ route('pdf', ['id' => $transaction->id]) }}"
+                                                                        class="btn btn-primary">CETAK-TIKET</a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach

@@ -44,26 +44,26 @@ class Payment_Controller extends Controller
             ),
         );
 
-        // $params = array(
-        //     'transaction_details' => array(
-        //         'order_id' => rand(),
-        //         'gross_amount' => $product->harga,
-        //     ),
-        //     'customer_details' => array(
-        //         'name' => Auth::user()->name,
-        //         'email' => Auth::user()->email,
-        //     ),
-        // );
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
+        // $combinedString = Auth::user()->id . $product->id . $product->harga;
+        // $sha256Hash = hash('sha256', $combinedString);
+
         $combinedString = Auth::user()->id . $product->id . $product->harga;
-        $sha256Hash = hash('sha256', $combinedString);
+        $salt = bin2hex(random_bytes(16)); // Generates a 16-byte salt and converts it to a hexadecimal string.
+        $saltedString = $combinedString . $salt; // Combine the original string with the salt.
+        $sha256Hash = hash('sha256', $saltedString); // Hash the salted string.
+
+        echo 'Salt: ' . $salt . PHP_EOL;
+        echo 'Salted String: ' . $saltedString . PHP_EOL;
+        echo 'SHA-256 Hash: ' . $sha256Hash . PHP_EOL;
 
         $transaksi = Transaksi::create([
             'user_id' => Auth::user()->id,
             'produk_id' => $product->id,
             'nama' => $product->name,
+            'tiket_id' => $product->id_tiket,
             'harga' => $product->harga,
             'status' => 'pending',
             'sha256' => $sha256Hash,

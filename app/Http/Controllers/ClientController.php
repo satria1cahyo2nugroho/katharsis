@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Transaksi;
+use App\Models\tiket_cek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
@@ -119,8 +122,8 @@ class ClientController extends Controller
                 ->join('users', 'tiket_desc.user_id', '=', 'users.id')
                 ->select(
                     'transaksis.*', // This will include the 'harga' field
-                    DB::raw('DATE(transaksis.created_at) as date'),
-                    DB::raw('SUM(transaksis.harga)/10 as total_sales'),
+                    DB::raw('DATE_FORMAT(transaksis.created_at, "%Y-%m-%d") as date'),
+                    DB::raw('SUM(transaksis.harga)/1000 as total_sales'),
                     'tiket_desc.name as product_name',
                     'users.name as user_name'
                 )
@@ -138,5 +141,83 @@ class ClientController extends Controller
             // If the user does not have the 'client' role, redirect or show an error
             return redirect()->back()->with('error', 'You do not have the necessary permissions to access this data.');
         }
+    }
+
+
+    public function check_qr()
+    {
+
+        return view('klien.qrcode');
+    }
+
+
+    // public function validasi(Request $request)
+    // {
+    //     $data = $request->input('data');
+    //     $nama = $data['nama'] ?? null;
+    //     $harga = $data['harga'] ?? null;
+    //     $code = $data['code'] ?? null;
+    //     $key = $data['key'] ?? null;
+
+    //     // Debugging: Log the data being checked
+    //     Log::info('Validating QR code with data:', compact('nama', 'harga', 'code', 'key'));
+
+    //     $record = Transaksi::where('nama', $nama)
+    //         ->where('harga', $harga)
+    //         ->where('snap_token', $code)
+    //         ->where('sha256', $key)
+    //         ->first();
+
+    //     if ($record) {
+    //         return response()->json(['success' => true, 'message' => 'Ticket code is Valid', 'data' => $record]);
+    //     } else {
+    //         return response()->json(['success' => false, 'message' => 'Tiket code is invalid']);
+    //     }
+    // }
+    public function validasi(Request $request)
+    {
+        $data = $request->input('data');
+        $nama = $data['nama'] ?? null;
+        $harga = $data['harga'] ?? null;
+        $code = $data['code'] ?? null;
+        $key = $data['key'] ?? null;
+
+        // Debugging: Log the data being checked
+        Log::info('Validating QR code with data:', compact('nama', 'harga', 'code', 'key'));
+
+        $record = Transaksi::where('nama', $nama)
+            ->where('harga', $harga)
+            ->where('snap_token', $code)
+            ->where('sha256', $key)
+            ->first();
+
+        if ($record) {
+            //data cek 
+            $existingRecord = tiket_cek::where('nama', $nama)
+                ->where('harga', $harga)
+                ->where('code', $code)
+                ->where('key', $key)
+                ->first();
+
+            if (!$existingRecord) {
+                // Save data to tiket_cek table only if it doesn't exist
+                tiket_cek::create([
+                    'nama' => $nama,
+                    'harga' => $harga,
+                    'code' => $code,
+                    'key' => $key
+                ]);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Ticket code is Valid', 'data' => $record]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Ticket code is invalid']);
+        }
+    }
+
+    public function getData()
+    {
+        $data = tiket_cek::all(); // Fetch all records
+        return response()->json(['data' => $data]);
     }
 }

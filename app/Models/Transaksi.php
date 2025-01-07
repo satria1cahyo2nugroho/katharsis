@@ -15,6 +15,7 @@ class Transaksi extends Model
         'user_id',
         'produk_id',
         'nama',
+        'tiket_id',
         'harga',
         'status',
         'snap_token',
