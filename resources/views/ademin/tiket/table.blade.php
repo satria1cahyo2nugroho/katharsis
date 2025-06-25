@@ -3,9 +3,10 @@
         <thead>
             <tr>
                 <th scope="col">no</th>
+                <th scope="col">Nama CLient</th>
                 <th scope="col">Image</th>
                 <th scope="col">id_tiket</th>
-                <th scope="col">Nama</th>
+                <th scope="col">Nama Tiket</th>
                 <th scope="col">Harga</th>
                 <th scope="col">Action</th>
             </tr>
@@ -14,6 +15,7 @@
             @foreach ($tiket as $t)
                 <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
+                    <th scope="row">{{ $t->user->name ?? 'User tidak ditemukan' }}</th>
                     <td><img src="{{ asset('storage/image-tiket/' . $t->image) }}" style="height: 150px; width: 250px;">
                     </td>
                     <td>{{ $t->id_tiket }}</td>

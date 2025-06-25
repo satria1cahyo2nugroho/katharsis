@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Transaksi;
+use App\Models\Tiket;
 use App\Models\tiket_cek;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -13,45 +14,44 @@ use Illuminate\Support\Facades\Auth;
 class ClientController extends Controller
 {
 
-    public function index(Request $request)
-    {
-        // Get the logged-in user ID
-        $userId = Auth::id();
+    // public function index(Request $request)
+    // {
+    //     // Get the logged-in user ID
+    //     $userId = Auth::id();
+    //     // Check if the logged-in user has the role 'client'
+    //     $userHasClientRole = DB::table('model_has_roles')
+    //         ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+    //         ->where('model_has_roles.model_id', '=', $userId)
+    //         ->where('roles.name', '=', 'client')
+    //         ->exists();
 
-        // Check if the logged-in user has the role 'client'
-        $userHasClientRole = DB::table('model_has_roles')
-            ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
-            ->where('model_has_roles.model_id', '=', $userId)
-            ->where('roles.name', '=', 'client')
-            ->exists();
+    //     if ($userHasClientRole) {
+    //         // Fetch data from the database filtered by user ID in tiket_desc
+    //         $transaki = DB::table('transaksis')
+    //             ->join('tiket_desc', 'transaksis.produk_id', '=', 'tiket_desc.id')
+    //             ->join('users', 'tiket_desc.user_id', '=', 'users.id')
+    //             ->select(
+    //                 'transaksis.*', // This will include the 'harga' field
+    //                 DB::raw('DATE(transaksis.created_at) as date'),
+    //                 DB::raw('SUM(transaksis.harga)/10 as total_sales'),
+    //                 'tiket_desc.name as product_name',
+    //                 'users.name as user_name'
+    //             )
+    //             ->where('tiket_desc.user_id', '=', $userId) // Filter by the logged-in user ID in tiket_desc
+    //             ->groupBy(DB::raw('DATE(transaksis.created_at)'), 'product_name', 'users.name', 'transaksis.id')
+    //             ->get();
 
-        if ($userHasClientRole) {
-            // Fetch data from the database filtered by user ID in tiket_desc
-            $transaki = DB::table('transaksis')
-                ->join('tiket_desc', 'transaksis.produk_id', '=', 'tiket_desc.id')
-                ->join('users', 'tiket_desc.user_id', '=', 'users.id')
-                ->select(
-                    'transaksis.*', // This will include the 'harga' field
-                    DB::raw('DATE(transaksis.created_at) as date'),
-                    DB::raw('SUM(transaksis.harga)/10 as total_sales'),
-                    'tiket_desc.name as product_name',
-                    'users.name as user_name'
-                )
-                ->where('tiket_desc.user_id', '=', $userId) // Filter by the logged-in user ID in tiket_desc
-                ->groupBy(DB::raw('DATE(transaksis.created_at)'), 'product_name', 'users.name', 'transaksis.id')
-                ->get();
+    //         // Prepare data for plotting
+    //         $dates = $transaki->pluck('date');
+    //         $totals = $transaki->pluck('total_sales');
 
-            // Prepare data for plotting
-            $dates = $transaki->pluck('date');
-            $totals = $transaki->pluck('total_sales');
-
-            // Return the view with the fetched data and plotting data
-            return view('klien.dashbod', compact('transaki', 'dates', 'totals'));
-        } else {
-            // If the user does not have the 'client' role, redirect or show an error
-            return redirect()->back()->with('error', 'You do not have the necessary permissions to access this data.');
-        }
-    }
+    //         // Return the view with the fetched data and plotting data
+    //         return view('klien.dashbod', compact('transaki', 'dates', 'totals'));
+    //     } else {
+    //         // If the user does not have the 'client' role, redirect or show an error
+    //         return redirect()->back()->with('error', 'You do not have the necessary permissions to access this data.');
+    //     }
+    // }
     // ver 3.0 with copilot
     // public function plotsales(Request $request)
     // {
@@ -119,30 +119,47 @@ class ClientController extends Controller
             // Fetch data from the database filtered by user ID in tiket_desc
             $transaki = DB::table('transaksis')
                 ->join('tiket_desc', 'transaksis.produk_id', '=', 'tiket_desc.id')
-                ->join('users', 'tiket_desc.user_id', '=', 'users.id')
+                ->join('users as penjual', 'tiket_desc.user_id', '=', 'penjual.id')
+                ->join('users as pembeli', 'transaksis.user_id', '=', 'pembeli.id')
                 ->select(
                     'transaksis.*', // This will include the 'harga' field
                     DB::raw('DATE_FORMAT(transaksis.created_at, "%Y-%m-%d") as date'),
-                    DB::raw('SUM(transaksis.harga)/1000 as total_sales'),
+                    DB::raw('SUM(transaksis.harga) as total_sales'),
                     'tiket_desc.name as product_name',
-                    'users.name as user_name'
+                    'penjual.name as user_name',
+                    'pembeli.name as buyer_name'
                 )
-                ->where('tiket_desc.user_id', '=', $userId) // Filter by the logged-in user ID in tiket_desc
-                ->groupBy(DB::raw('DATE(transaksis.created_at)'), 'product_name', 'users.name', 'transaksis.id')
+                ->where('tiket_desc.user_id', '=', $userId)
+                ->groupBy(DB::raw('DATE(transaksis.created_at)'), 'product_name', 'penjual.name', 'pembeli.name', 'transaksis.id')
+                ->get();
+
+            $isClient = DB::table('model_has_roles')
+                ->join('roles', 'model_has_roles.role_id', '=', 'roles.id')
+                ->where('model_id', $userId)
+                ->where('roles.name', 'client')
+                ->exists();
+
+            if (!$isClient) {
+                return redirect()->back()->with('error', 'Bukan client.');
+            }
+
+            // Ambil tiket milik client dan histori pembelian
+            $tiketSa = Tiket::with(['transaksis.user']) // ambil pembeli juga
+                ->where('user_id', $userId)
                 ->get();
 
             // Prepare data for plotting
             $dates = $transaki->pluck('date');
             $totals = $transaki->pluck('total_sales');
+            $jumlah = $transaki->sum('total_sales');
 
             // Return the view with the fetched data and plotting data
-            return view('klien.sales', compact('transaki', 'dates', 'totals'));
+            return view('klien.sales', compact('transaki', 'tiketSa', 'dates', 'totals', 'jumlah'));
         } else {
             // If the user does not have the 'client' role, redirect or show an error
             return redirect()->back()->with('error', 'You do not have the necessary permissions to access this data.');
         }
     }
-
 
     public function check_qr()
     {

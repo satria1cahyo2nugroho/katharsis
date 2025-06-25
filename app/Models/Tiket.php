@@ -30,4 +30,8 @@ class Tiket extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+    public function transaksis()
+    {
+        return $this->hasMany(\App\Models\Transaksi::class, 'produk_id');
+    }
 }

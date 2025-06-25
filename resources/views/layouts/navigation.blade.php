@@ -43,6 +43,9 @@
                             <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
                                 {{ __('Sales') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('index2')" :active="request()->routeIs('index2')">
+                                {{ __('Tiket') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('qr-code')" :active="request()->routeIs('qr-code')">
                                 {{ __('QR-CODE') }}
                             </x-nav-link>

@@ -27,4 +27,8 @@ class Transaksi extends Model
     {
         return $this->belongsTo(Tiket::class, 'produk_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

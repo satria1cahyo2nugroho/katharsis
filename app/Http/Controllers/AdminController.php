@@ -82,6 +82,7 @@ class AdminController extends Controller
     {
 
         $tiket = Tiket::get();
+        $tiket = Tiket::with('user')->get();
 
         return view('ademin.tiket.htiket ', compact('tiket'));
     }

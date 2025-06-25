@@ -47,17 +47,17 @@ class Payment_Controller extends Controller
 
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-        // $combinedString = Auth::user()->id . $product->id . $product->harga;
+        // $combinedString = Auth::user()->id . $product->id . $product->created_at;
         // $sha256Hash = hash('sha256', $combinedString);
 
-        $combinedString = Auth::user()->id . $product->id . $product->harga;
         $salt = bin2hex(random_bytes(16)); // Generates a 16-byte salt and converts it to a hexadecimal string.
-        $saltedString = $combinedString . $salt; // Combine the original string with the salt.
-        $sha256Hash = hash('sha256', $saltedString); // Hash the salted string.
+        $combinedString = Auth::user()->id . $product->id . $product->harga . date("Y-m-d H:i:s");
+        // $saltedString = $combinedString . $salt; // Combine the original string with the salt.
+        $sha256Hash = hash('sha256', $combinedString); // Hash the salted string.
 
-        echo 'Salt: ' . $salt . PHP_EOL;
-        echo 'Salted String: ' . $saltedString . PHP_EOL;
-        echo 'SHA-256 Hash: ' . $sha256Hash . PHP_EOL;
+        // echo 'Salt: ' . $salt . PHP_EOL;
+        // echo 'Salted String: ' . $saltedString . PHP_EOL;
+        // echo 'SHA-256 Hash: ' . $sha256Hash . PHP_EOL;
 
         $transaksi = Transaksi::create([
             'user_id' => Auth::user()->id,

@@ -59,9 +59,46 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
+                                    <h5 class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
+                                        Jumlah Pemasukan: Rp{{ number_format($jumlah, 0, ',', '.') }}
+                                    </h5>
                                     <div class="col-md-12">
                                         <canvas id="myCharrt"></canvas>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card p-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h1>Tiket</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+
+                                    {{-- @foreach ($tiketSa as $tiket)
+                                            <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
+                                                <h4>{{ $tiket->name }}</h4>
+                                                <p>{{ $tiket->deskripsi }}</p>
+                                                <p>Harga: Rp{{ number_format($tiket->harga, 0, ',', '.') }}</p>
+                                                <img src="{{ asset('storage/image-tiket/' . $tiket->image) }}"
+                                                    style="max-width:200px;">
+
+                                                <h5>Riwayat Pembeli:</h5>
+                                                @forelse ($tiket->transaksis as $trx)
+                                                    <p>- {{ $trx->user->name ?? 'User tidak ditemukan' }} |
+                                                        Rp{{ number_format($trx->harga, 0, ',', '.') }} |
+                                                        {{ $trx->created_at->format('Y-m-d') }}</p>
+                                                @empty
+                                                    <p><em>Belum ada pembelian</em></p>
+                                                @endforelse
+                                            </div>
+                                        @endforeach --}}
+                                    @include('klien.tiket')
+
                                 </div>
                             </div>
                         </div>
@@ -78,23 +115,25 @@
                                     @if ($transaki->isEmpty())
                                         <div class="p-3">
                                             <div class="alert alert-danger" role="alert">
-                                                Transaksi tidak Ditemukan
+                                                Tidak ada data yang tersedia
                                             </div>
                                         </div>
                                     @else
                                         <thead>
                                             <tr>
                                                 <th scope="col">No</th>
+                                                <th scope="col">Pengunjung</th>
                                                 <th scope="col">Nama Tiket</th>
                                                 <th scope="col">Harga</th>
                                                 <th scope="col">Status Transaksi</th>
-                                                <th scope="col">Tanggal</th>
+                                                <th scope="col">Tanggal Pembelian</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($transaki as $transaction)
                                                 <tr>
                                                     <th scope="row">{{ $loop->iteration }}</th>
+                                                    <td>{{ $transaction->buyer_name }}</td>
                                                     <td>{{ $transaction->product_name }}</td>
                                                     <td>Rp{{ number_format($transaction->harga, 0, ',', '.') }}</td>
                                                     <td>
@@ -161,9 +200,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
         <script>
+            // Fungsi untuk menghasilkan warna acak HEX
+            function getRandomColor() {
+                const letters = "0123456789ABCDEF";
+                let color = "#";
+                for (let i = 0; i < 6; i++) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            // Fungsi untuk membuat array warna sebanyak jumlah data
+            function generateRandomColors(count) {
+                const colors = [];
+                for (let i = 0; i < count; i++) {
+                    colors.push(getRandomColor());
+                }
+                return colors;
+            }
+
             const xValues = {!! json_encode($dates) !!};
             const yValues = {!! json_encode($totals) !!};
-            const barColors = ["red", "green", "blue", "orange", "brown"];
+            const barColors = generateRandomColors(yValues.length);
 
             new Chart("myCharrt", {
                 type: "bar",
@@ -180,7 +238,7 @@
                     },
                     title: {
                         display: true,
-                        text: "TRANSAKSI BULANAN"
+                        text: "TRANSAKSI"
                     }
                 }
             });
