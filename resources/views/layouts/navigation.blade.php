@@ -12,46 +12,52 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <nav
+                    class="sm:flex overflow-x-auto whitespace-nowrap min-w-0 gap-6 px-6 py-2 items-center bg-white border-b shadow-sm">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (Auth::check())
-                        @if (Auth::user()->hasRole('admin'))
-                            <x-nav-link :href="route('tiket-view')" :active="request()->routeIs('tiket-view')">
-                                {{ __('TIKET') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('user-view')" :active="request()->routeIs('user-view')">
-                                {{ __('USER') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('client-view')" :active="request()->routeIs('client-view')">
-                                {{ __('CLIENT') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('transaksi-view')" :active="request()->routeIs('transaksi-view')">
-                                {{ __('Transaksi') }}
-                            </x-nav-link>
-                        @elseif (Auth::user()->hasRole('pengunjung'))
-                            <x-nav-link :href="route('tiket')" :active="request()->routeIs('tiket')">
-                                {{ __('TIKET') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('transaksi')" :active="request()->routeIs('transaksi')">
-                                {{ __('Transaksi') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('cetak')" :active="request()->routeIs('cetak')">
-                                {{ __('Cetak-Tiket') }} </x-nav-link>
-                        @elseif (Auth::user()->hasRole('client'))
-                            <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                                {{ __('Sales') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('index2')" :active="request()->routeIs('index2')">
-                                {{ __('Tiket') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('qr-code')" :active="request()->routeIs('qr-code')">
-                                {{ __('QR-CODE') }}
-                            </x-nav-link>
-                        @endif
-                    @endif
-                </div>
+
+                    @auth
+                        @switch(Auth::user()->roles->first()->name)
+                            @case('admin')
+                                <x-nav-link :href="route('tiket-view')" :active="request()->routeIs('tiket-view')">
+                                    {{ __('Tiket') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('user-view')" :active="request()->routeIs('user-view')">
+                                    {{ __('User') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('client-view')" :active="request()->routeIs('client-view')">
+                                    {{ __('Client') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('transaksi-view')" :active="request()->routeIs('transaksi-view')">
+                                    {{ __('Transaksi') }}
+                                </x-nav-link>
+                            @break
+
+                            @case('pengunjung')
+                                <x-nav-link :href="route('tiket')" :active="request()->routeIs('tiket')">
+                                    {{ __('Tiket') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('transaksi')" :active="request()->routeIs('transaksi')">
+                                    {{ __('Transaksi') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('cetak')" :active="request()->routeIs('cetak')">
+                                    {{ __('Cetak Tiket') }}
+                                </x-nav-link>
+                            @break
+
+                            @case('client')
+                                <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                                    {{ __('Data Penjualan') }}
+                                </x-nav-link>
+                                <x-nav-link :href="route('qr-code')" :active="request()->routeIs('qr-code')">
+                                    {{ __('Scan / QR Code') }}
+                                </x-nav-link>
+                            @break
+                        @endswitch
+                    @endauth
+                </nav>
             </div>
 
             <!-- Settings Dropdown -->

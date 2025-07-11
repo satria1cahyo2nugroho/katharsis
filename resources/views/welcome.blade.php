@@ -381,99 +381,104 @@
     </div>
     <!-- Ticket Section -->
 
-    <section class="showcase bg-light" id="tiket">
+    <section class="bg-light py-5" id="tiket">
         <div class="container text-center">
-            <div class="container p-3">
-                <div class="card">
-                    <div class="card-header">
-                        Khatarsis
-                    </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote m-2">
-                            <h1> Tiket Yang sedang dijual </h1>
-                            <footer class="blockquote-footer mt-2">Range <cite title="Source Title">54Hz+</cite>
-                            </footer>
-                        </blockquote>
-                    </div>
+            <!-- Tiket yang Sedang Dijual -->
+            <div class="card shadow-sm mb-5">
+                <div class="card-header fw-bold bg-white">Khatarsis</div>
+                <div class="card-body">
+                    <h2 class="display-6 text-primary mb-1">Tiket yang Sedang Dijual</h2>
+                    <p class="text-muted">Range <cite title="Source Title">54Hz+</cite></p>
                 </div>
             </div>
-            <div class="row mt-3">
+
+            <div class="row justify-content-center">
                 @foreach ($tiket->take(4) as $item)
-                    <div class="col-lg-3">
-                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                            <div class="d-flex"> <img src="{{ asset('storage/image-tiket/' . $item->image) }}"
-                                    class="card-img-top mx-auto" style="height: 300px; width: 300px;"> </div>
-                            <h3> {{ __($item->name) }}</h3>
-                            <p class="lead mb-0">{{ $item->deskripsi }}</p>
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100">
+                            <img src="{{ asset('storage/image-tiket/' . $item->image) }}"
+                                class="card-img-top img-fluid" style="object-fit: cover; height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark fw-bold">{{ $item->name }}</h5>
+                                <p class="card-text text-muted">{{ $item->deskripsi }}</p>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-        <div class="container-fluid p-5">
-            <div class="container p-3">
-                <div class="card">
-                    <div class="card-header">
-                        Khatarsis
+
+        <!-- Event yang Akan Datang -->
+        <div class="container mt-5">
+            <div class="card shadow-sm mb-5">
+                <div class="card-header fw-bold bg-white">Khatarsis</div>
+                <div class="card-body text-center">
+                    <h2 class="display-6 text-success mb-1">Event yang Akan Datang</h2>
+                    <p class="text-muted">Range <cite title="Source Title">54Hz+</cite></p>
+                </div>
+            </div>
+
+            @php
+                $events = [
+                    ['image' => 'q.jpg', 'title' => 'Fully', 'desc' => 'Lore Ipsumx'],
+                    ['image' => 'w.jpg', 'title' => 'Updated', 'desc' => 'Lorem ipsum'],
+                    ['image' => 'e.jpg', 'title' => 'HJK', 'desc' => 'sadjhkajwhd'],
+                ];
+            @endphp
+
+            @foreach ($events as $index => $event)
+                <div class="row align-items-center mb-5">
+                    <div class="col-lg-6 {{ $index % 2 === 0 ? 'order-lg-2' : '' }}">
+                        <img src="{{ asset('landpage/assets/image/' . $event['image']) }}"
+                            alt="{{ $event['title'] }}" class="img-fluid rounded shadow-sm">
                     </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote m-2">
-                            <h1> Event Yang Akan Datang</h1>
-                            <footer class="blockquote-footer mt-2">Range <cite title="Source Title">54Hz+</cite>
-                            </footer>
-                        </blockquote>
+                    <div class="col-lg-6 {{ $index % 2 === 0 ? 'order-lg-1' : '' }}">
+                        <div class="text-center px-4">
+                            <h3 class="fw-bold">{{ $event['title'] }}</h3>
+                            <p class="text-muted">{{ $event['desc'] }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row g-0">
-                <div class="col-lg-6 order-lg-2 showcase-img">
-                    <img src="{{ asset('landpage/assets/image/q.jpg') }}" alt="Placeholder Image">
-                </div>
-                <div
-                    class="col-lg-6 order-lg-1 my-auto showcase-text d-flex flex-column justify-content-center align-items-center text-center">
-                    <h2>Fully</h2>
-                    <p class="lead mb-0">Lore Ippsumx</p>
-                </div>
-            </div>
-            <div class="row g-0">
-                <div class="col-lg-6 showcase-img">
-                    <img src="{{ asset('landpage/assets/image/w.jpg') }}" alt="Placeholder Image">
-                </div>
-                <div
-                    class="col-lg-6 my-auto showcase-text d-flex flex-column justify-content-center align-items-center text-center">
-                    <h2>Updated</h2>
-                    <p class="lead mb-0">lore ipsum</p>
-                </div>
-            </div>
-            <div class="row g-0">
-                <div class="col-lg-6 order-lg-2 showcase-img">
-                    <img src="{{ asset('landpage/assets/image/e.jpg') }}" alt="Placeholder Image">
-                </div>
-                <div
-                    class="col-lg-6 order-lg-1 my-auto showcase-text d-flex flex-column justify-content-center align-items-center text-center">
-                    <h2>HJK</h2>
-                    <p class="lead mb-0">sadjhkajwhd</p>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 
 </body>
 
-<footer class="footer">
+<footer class="bg-white border-top shadow-sm mt-5 py-4">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4 text-center text-md-start mb-3 mb-md-0"> <a
-                    class="navbar-brand d-flex align-items-center" href="#"> <img
-                        src="{{ asset('landpage/assets/KH.png') }}" alt="khatarsis"> <span class="ms-2">&copy;
-                        KHATARSIS 2024</span> </a> </div>
-            <div class="col-md-4 text-center mb-3 mb-md-0"> <span>Follow us on:</span> </div>
-            <div class="col-md-4 text-center text-md-end">
-                <div class="social-icons d-inline-flex gap-3"> <a href="#" class="btn btn-outline-light"> <i
-                            class="bi bi-instagram"></i> </a> <a href="#" class="btn btn-outline-light"> <i
-                            class="bi bi-twitter-x"></i> </a> <a href="#" class="btn btn-outline-light"> <i
-                            class="bi bi-facebook"></i> </a> <a href="#" class="btn btn-outline-light"> <i
-                            class="bi bi-whatsapp"></i> </a> </div>
+        <div class="row align-items-center text-center text-md-start">
+            <!-- Branding -->
+            <div
+                class="col-md-4 mb-3 mb-md-0 d-flex align-items-center justify-content-center justify-content-md-start">
+                <a href="#" class="d-flex align-items-center text-decoration-none">
+                    <img src="{{ asset('landpage/assets/KH.png') }}" alt="KHATARSIS Logo" width="50"
+                        height="50" class="me-2">
+                    <span class="fw-semibold text-muted">&copy; KHATARSIS {{ date('Y') }}</span>
+                </a>
+            </div>
+
+            <!-- Label -->
+            <div class="col-md-4 mb-3 mb-md-0 text-muted">
+                <span class="fs-6">Follow us on social media</span>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="col-md-4 d-flex justify-content-center justify-content-md-end">
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-dark fs-5" aria-label="Instagram">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="#" class="text-dark fs-5" aria-label="Twitter">
+                        <i class="bi bi-twitter-x"></i>
+                    </a>
+                    <a href="#" class="text-dark fs-5" aria-label="Facebook">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                    <a href="#" class="text-dark fs-5" aria-label="WhatsApp">
+                        <i class="bi bi-whatsapp"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

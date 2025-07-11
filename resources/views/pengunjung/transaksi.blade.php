@@ -149,7 +149,7 @@
             }
         </script>
 
-
+        {{-- [pagination] --}}
         <script>
             $(document).ready(function() {
                 const rowsPerPage = 15;
@@ -185,6 +185,7 @@
                 showPage(1);
             });
         </script>
+
 </body>
 
 </html>

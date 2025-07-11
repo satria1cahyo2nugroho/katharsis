@@ -14,7 +14,9 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('landpage/bootstrap/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@heroicons/vue@2.0.13/24/outline/index.js"></script>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -39,35 +41,30 @@
         </main>
     </div>
 </body>
-<footer class="bg-white">
-    <div class="container-fluid bg-body-tertiary">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="{{ asset('landpage/assets/KH.png') }}" alt="khatarsis" width="50" height="50" />
-                    <span class="text">&copy; KHATARSIS 2024</span>
-                </a>
+<footer class="bg-white border-top shadow-sm mt-5">
+    <div class="container py-4 d-flex flex-column flex-lg-row justify-content-between align-items-center">
+        <!-- Branding -->
+        <div class="d-flex align-items-center mb-3 mb-lg-0">
+            <img src="{{ asset('landpage/assets/KH.png') }}" alt="Khatarsis Logo" width="50" height="50"
+                class="me-2">
+            <span class="text-muted fw-semibold">&copy; KHATARSIS 2024</span>
+        </div>
 
-                <span class="navbar-text">
-                    <div class="hstack gap-2">
-                        <button class="btn">
-                            <i class="bi bi-instagram"></i>
-                        </button>
-                        <div class="vr"></div>
-                        <button class="btn">
-                            <i class="bi bi-twitter-x"></i>
-                        </button>
-                        <div class="vr"></div>
-                        <button class="btn">
-                            <i class="bi bi-facebook"></i>
-                        </button>
-                        <div class="vr"></div>
-                        <button class="btn">
-                            <i class="bi bi-whatsapp"></i>
-                        </button>
-                    </div>
-                </span>
-            </div>
+        <!-- Social Media Icons -->
+        <div class="d-flex gap-3">
+            <a href="#" class="text-secondary fs-4 hover-opacity" aria-label="Instagram">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a href="#" class="text-secondary fs-4 hover-opacity" aria-label="Twitter X">
+                <i class="bi bi-twitter-x"></i>
+            </a>
+            <a href="#" class="text-secondary fs-4 hover-opacity" aria-label="Facebook">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <a href="#" class="text-secondary fs-4 hover-opacity" aria-label="WhatsApp">
+                <i class="bi bi-whatsapp"></i>
+            </a>
+        </div>
     </div>
 </footer>
 <script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

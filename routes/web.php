@@ -99,7 +99,6 @@ Route::middleware(['auth', 'verified', 'role:pengunjung'])->group(
 
 Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
     Route::get('/sales', [ClientController::class, 'plotSales'])->name('index');
-    Route::get('/tikets', [ClientController::class, 'tampilkanTiketClient'])->name('index2');
     Route::get('/QR-CODE', [ClientController::class, 'check_qr'])->name('qr-code');
     Route::post('/validasi', [ClientController::class, 'validasi'])->name('validasi');
     Route::get('/getData', [ClientController::class, 'getData'])->name('getData');

@@ -1,4 +1,4 @@
-<div class="container mx-auto px-4">
+{{-- <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-blue-500 text-white rounded-lg shadow-lg p-4">
             <div class="flex justify-between items-center">
@@ -35,90 +35,60 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 
-<div class="container p-4">
-    <div class="card">
-        {{-- <div id="carouselExampleIndicators" class="carousel slide">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                    aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                    aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                    aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset('landpage/assets/image/q.jpg') }}" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('landpage/assets/image/w.jpg') }}" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ asset('landpage/assets/image/e.jpg') }}" class="d-block w-100" alt="...">
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div> --}}
-    </div>
-    <br>
-    <div class="container my-5">
-        <div class="p-5 text-center bg-body-tertiary rounded-3">
-            <img src="{{ asset('landpage/assets/logo2.png') }}" class="rounded img-fluid d-block mx-auto"
-                alt="..." />
-            <h1 class="text-body-emphasis">APA ITU KHATARSIS ??</h1>
-            <p class="col-lg-8 mx-auto fs-5 text-muted">
-                Khatarsis adalah sebuah sarana untuk anda menjual tiket sebuah event dengan sekala kecil
-                seperti acara <code>Jalan Santai,jejepangan,Korea,</code> dsb. dengan adanya khatarsis semuanya bisa
-                lebih mudah.
-            </p>
-        </div>
+<div class="container py-5">
+    <div class="text-center">
+        <img src="{{ asset('landpage/assets/logo2.png') }}" alt="Logo" class="mx-auto rounded mb-4"
+            style="max-height: 120px;">
+        <h1 class="fw-bold text-primary mb-3">Apa itu <span class="text-uppercase">Khatarsis</span>?</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">
+            Khatarsis adalah platform untuk menjual tiket event skala kecil seperti <code>Jalan Santai</code>,
+            <code>Jejepangan</code>, <code>Korea</code>, dan lainnya. Lebih mudah, lebih praktis, lebih terpercaya!
+        </p>
     </div>
 </div>
-<div class="container text-center pb-5">
-    <div class="row">
-        <div class="col-4">
-            <div class="card" style="width: 18rem;">
+
+<div class="container pb-5">
+    <div class="row text-center g-4">
+        <!-- Tiket Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 hover-shadow" style="transition: all 0.3s ease;">
                 <div class="card-body">
-                    <i class="bi bi-ticket-perforated" style="font-size: 4rem;"></i>
-                    <h5 class="font-semibold text-xl text-gray-800 leading-tight">Tiket</h5>
-                    <p class="card-text">Menu ini akan menampilkan rentetan User
-                        yang telah terdaftar atau bergabung,
-                        berfungsi juga untuk menambahkan, menghapus, dan mengedit</p>
+                    <div class="text-primary mb-3">
+                        <i class="bi bi-ticket-perforated" style="font-size: 3.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Menu Tiket</h5>
+                    <p class="text-muted">Kelola tiket yang tersedia—tambahkan, edit, atau hapus tiket dengan mudah.</p>
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            <div class="card" style="width: 18rem;">
+
+        <!-- User Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 hover-shadow" style="transition: all 0.3s ease;">
                 <div class="card-body">
-                    <i class="bi bi-person-badge" style="font-size: 4rem;"></i>
-                    <h5 class="font-semibold text-xl text-gray-800 leading-tight">USER</h5>
-                    <p class="card-text">Menu ini akan menampilkan rentetan User
-                        yang telah terdaftar atau bergabung,
-                        berfungsi juga untuk menambahkan, menghapus, dan mengedit</p>
+                    <div class="text-success mb-3">
+                        <i class="bi bi-person-badge" style="font-size: 3.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Menu User</h5>
+                    <p class="text-muted">Tampilkan dan atur data user yang terdaftar—satu tempat untuk semua
+                        pengelolaan.</p>
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            <div class="card" style="width: 18rem;">
+
+        <!-- Client Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100 hover-shadow" style="transition: all 0.3s ease;">
                 <div class="card-body">
-                    <i class="bi bi-person-circle" style="font-size: 4rem;"></i>
-                    <h5 class="font-semibold text-xl text-gray-800 leading-tight">Client</h5>
-                    <p class="card-text">Menu ini akan menampilkan rentetan Client
-                        yang telah terdaftar atau bergabung,
-                        berfungsi juga untuk menambahkan, menghapus, dan mengedi</p>
+                    <div class="text-purple mb-3" style="color: #6f42c1;">
+                        <i class="bi bi-person-circle" style="font-size: 3.5rem;"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">Menu Client</h5>
+                    <p class="text-muted">Lihat dan kelola data klien yang bergabung dengan sistem secara efisien.</p>
                 </div>
             </div>
         </div>

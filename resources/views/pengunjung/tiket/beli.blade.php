@@ -27,7 +27,6 @@
         </header>
         <!-- Page Content -->
         <main>
-
             <div class="content mt-5">
                 <div class="container flex-auto">
                     <div class="card">
@@ -36,39 +35,44 @@
                             <div class="card-vody">
                                 <div class="container text-center">
                                     <div class="row">
-                                        <form action="{{ route('proses_bayar') }}" method="POST">
+                                        <form action="{{ route('proses_bayar') }}" method="POST" class="my-5">
                                             @csrf
-                                            <div class="card card-body">
-                                                <div
-                                                    class="media align-items-center align-items-lg-start text-center text-lg-left flex-column flex-lg-row">
-                                                    <div class="d-flex justify-content-center align-items-center">
-                                                        <img src="{{ asset('storage/image-tiket/' . $tikets->image) }}"
-                                                            class="img-thumbnail" style="height: 500px; width: 600px;"
-                                                            alt="...">
-                                                    </div>
-                                                    <div class="media-body mt-3">
-                                                        <h5
-                                                            class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                                                            {{ __($tikets->name) }}
-                                                        </h5>
+                                            <div class="card shadow-sm border-0">
+                                                <div class="card-body">
+                                                    <div class="row align-items-center g-4">
+                                                        <!-- Gambar Tiket -->
+                                                        <div class="col-lg-6 text-center">
+                                                            <img src="{{ asset('storage/image-tiket/' . $tikets->image) }}"
+                                                                alt="{{ $tikets->name }}"
+                                                                class="img-fluid rounded shadow-sm"
+                                                                style="max-height: 400px; object-fit: cover;">
+                                                        </div>
 
-                                                        <p class="mb-3">{{ __($tikets->deskripsi) }}</p>
-                                                    </div>
+                                                        <!-- Informasi Tiket -->
+                                                        <div class="col-lg-6">
+                                                            <h3 class="fw-bold mb-3 text-primary">{{ $tikets->name }}
+                                                            </h3>
+                                                            <p class="text-muted mb-4">{{ $tikets->deskripsi }}</p>
 
-                                                    <div class="mt-3 mt-lg-0 ml-lg-3 text-center">
-                                                        <h5
-                                                            class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                                                            {{ __('RP.') }} {{ __($tikets->harga) }}
-                                                        </h5>
-                                                        <button type="submit" class="btn btn-primary mt-4 text-white">
-                                                            <span><i class="bi bi-bag"></i></span> BELI TIKET </button>
+                                                            <h4 class="text-success mb-3">
+                                                                Rp {{ number_format($tikets->harga, 0, ',', '.') }}
+                                                            </h4>
+
+                                                            <button type="submit"
+                                                                class="btn btn-primary btn-lg rounded-pill w-100">
+                                                                <i class="bi bi-bag me-2"></i> Beli Tiket
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            {{-- <input type="hidden" name="id" value="{{ $tikets->id }}"> --}}
+
+                                            <!-- Hidden Data -->
                                             <input type="hidden" name="produk_id" value="{{ $tikets->id }}">
                                             <input type="hidden" name="harga" value="{{ $tikets->harga }}">
                                         </form>
+
+
 
 
                                         <div class="card-body">
@@ -84,7 +88,7 @@
                                                         <blockquote class="blockquote m-2">
                                                             <h5
                                                                 class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                                                                {{ __('KHATARSIS') }}
+                                                                {{ __('TIKET LAINNYA') }}
                                                             </h5>
                                                             <footer class="blockquote-footer mt-2">Range <cite
                                                                     title="Source Title">54Hz+</cite></footer>
@@ -92,55 +96,58 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="container p-2 mb-3">
-                                                <div class="row row-cols-4">
+                                            <div class="container my-5">
+                                                <div
+                                                    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                                                     @foreach ($tikett as $item)
-                                                        <div class="col mb-2">
-                                                            <div class="card" style="width: 18rem;">
+                                                        <div class="col">
+                                                            <div class="card h-100 shadow-sm border-0">
                                                                 <img src="{{ asset('storage/image-tiket/' . $item->image) }}"
-                                                                    class="card-img-top mx-auto"
-                                                                    style="height: 200px; width: 200px;">
-                                                                <div class="card-body">
-                                                                    <h2
-                                                                        class="font-semibold text-xl text-gray-800 leading-tight ">
-                                                                        {{ __($item->name) }}
-                                                                    </h2>
-                                                                    <h5
-                                                                        class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                                                                        {{ __('RP.') }} {{ __($item->harga) }}
-                                                                    </h5>
-                                                                    {{-- <p class="card-text mb-1">{{ $item->deskripsi }}</p> --}}
-                                                                    <a href="{{ route('tiket-beli', ['id' => $item->id]) }}"
-                                                                        class="btn btn-primary">BELI TIKET
-                                                                        <span><i class="bi bi-bag"></span></i></a>
-                                                                    <a href="#" type="button"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#Modal{{ $item->id }}"
-                                                                        class="btn btn-primary">Deskripsi <span><i
-                                                                                class="bi bi-receipt-cutoff"></i></a>
+                                                                    alt="{{ $item->name }}"
+                                                                    class="card-img-top img-fluid rounded-top"
+                                                                    style="object-fit: cover; height: 220px;">
+                                                                <div class="card-body text-center">
+                                                                    <h5 class="fw-bold mb-2">{{ $item->name }}</h5>
+                                                                    <h6 class="text-muted mb-3">Rp
+                                                                        {{ number_format($item->harga, 0, ',', '.') }}
+                                                                    </h6>
+                                                                    <div class="d-grid gap-2">
+                                                                        <a href="{{ route('tiket-beli', ['id' => $item->id]) }}"
+                                                                            class="btn btn-primary">
+                                                                            <i class="bi bi-bag me-1"></i> Beli Tiket
+                                                                        </a>
+                                                                        <button type="button"
+                                                                            class="btn btn-outline-secondary"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#Modal{{ $item->id }}">
+                                                                            <i class="bi bi-receipt-cutoff me-1"></i>
+                                                                            Deskripsi
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <!-- Modal -->
+                                                        <!-- Modal Deskripsi -->
                                                         <div class="modal fade" id="Modal{{ $item->id }}"
-                                                            tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                            tabindex="-1" aria-labelledby="Label{{ $item->id }}"
                                                             aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h1 class="modal-title fs-5"
-                                                                            id="exampleModalLabel">Deskripsi Tiket</h1>
+                                                                        <h5 class="modal-title"
+                                                                            id="Label{{ $item->id }}">Deskripsi
+                                                                            Tiket</h5>
                                                                         <button type="button" class="btn-close"
                                                                             data-bs-dismiss="modal"
-                                                                            aria-label="Close"></button>
+                                                                            aria-label="Tutup"></button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <p><b>{{ $item->deskripsi }}</b></p>
+                                                                        <p>{{ $item->deskripsi }}</p>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-secondary"
-                                                                            data-bs-dismiss="modal">Close</button>
+                                                                            data-bs-dismiss="modal">Tutup</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -148,6 +155,7 @@
                                                     @endforeach
                                                 </div>
                                             </div>
+
 
                                         </div>
                                     </div>

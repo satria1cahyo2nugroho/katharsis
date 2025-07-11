@@ -1,43 +1,43 @@
-<div class="container p-2 mb-3">
-    <div class="row row-cols-4">
+<div class="container my-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         @foreach ($tiket as $item)
-            <div class="col mb-2">
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ asset('storage/image-tiket/' . $item->image) }}" class="card-img-top mx-auto"
-                        style="height: 200px; width: 200px;">
-                    <div class="card-body">
-                        <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
-                            {{ __($item->name) }}
-                        </h2>
-                        <h5 class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
-                            {{ __('RP.') }} {{ __($item->harga) }}
-                        </h5>
-                        {{-- <p class="card-text mb-1">{{ $item->deskripsi }}</p> --}}
-                        <a href="{{ route('tiket-beli', ['id' => $item->id]) }}" class="btn btn-primary">DETAIL TIKET
-                            <span><i class="bi bi-bag"></span></i></a>
-                        <a href="#" type="button" data-bs-toggle="modal"
-                            data-bs-target="#Modal{{ $item->id }}" class="btn btn-primary">Deskripsi <span><i
-                                    class="bi bi-receipt-cutoff"></i></a>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="{{ asset('storage/image-tiket/' . $item->image) }}" alt="{{ $item->name }}"
+                        class="card-img-top img-fluid" style="object-fit: cover; height: 220px;">
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title fw-bold">{{ $item->name }}</h5>
+                        <p class="text-muted mb-2">Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
+
+                        <div class="d-grid gap-2">
+                            <a href="{{ route('tiket-beli', ['id' => $item->id]) }}" class="btn btn-primary">
+                                <i class="bi bi-bag me-1"></i> Detail Tiket
+                            </a>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                data-bs-target="#Modal{{ $item->id }}">
+                                <i class="bi bi-receipt-cutoff me-1"></i> Deskripsi
+                            </button>
+                        </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="Modal{{ $item->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
+            <!-- Modal Deskripsi Tiket -->
+            <div class="modal fade" id="Modal{{ $item->id }}" tabindex="-1"
+                aria-labelledby="ModalLabel{{ $item->id }}" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Deskripsi Tiket</h1>
+                            <h5 class="modal-title" id="ModalLabel{{ $item->id }}">Deskripsi Tiket</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p><b>{{ $item->deskripsi }}</b></p>
+                            <p>{{ $item->deskripsi }}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>

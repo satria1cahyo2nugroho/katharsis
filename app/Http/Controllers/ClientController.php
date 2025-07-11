@@ -148,10 +148,12 @@ class ClientController extends Controller
                 ->where('user_id', $userId)
                 ->get();
 
+
             // Prepare data for plotting
             $dates = $transaki->pluck('date');
-            $totals = $transaki->pluck('total_sales');
-            $jumlah = $transaki->sum('total_sales');
+            $totals = $transaki->pluck('harga')->map(fn($val) => (int)$val)->toArray();
+            $jumlah = $transaki->sum('harga');
+
 
             // Return the view with the fetched data and plotting data
             return view('klien.sales', compact('transaki', 'tiketSa', 'dates', 'totals', 'jumlah'));

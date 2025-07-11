@@ -27,7 +27,7 @@
         <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
-                    {{ __('Cetak-Tiket') }}
+                    {{ __('SALES') }}
                 </h2>
             </div>
         </header>
@@ -62,7 +62,10 @@
                                     <h5 class="font-semibold text-lg text-gray-800 leading-tight mb-1 ">
                                         Jumlah Pemasukan: Rp{{ number_format($jumlah, 0, ',', '.') }}
                                     </h5>
-                                    <div class="col-md-12">
+                                    {{-- <div class="col-md-12">
+                                        <canvas id="myCharrt"></canvas>
+                                    </div> --}}
+                                    <div id="chartContainer" style="overflow-x: auto;">
                                         <canvas id="myCharrt"></canvas>
                                     </div>
                                 </div>
@@ -78,7 +81,6 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-
                                     {{-- @foreach ($tiketSa as $tiket)
                                             <div style="border:1px solid #ccc; padding:10px; margin-bottom:15px;">
                                                 <h4>{{ $tiket->name }}</h4>
@@ -170,34 +172,8 @@
 
         <script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('landpage/jquery/jquery3.7.1.min.js') }}"></script>
-        {{-- plot --}}
-        {{-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> --}}
-        {{-- plot --}}
-        {{-- <script>
-            const xArray = {!! json_encode($dates) !!};
-            const yArray = {!! json_encode($totals) !!};
-            // Define Data 
-            const data = [{
-                x: xArray,
-                y: yArray,
-                mode: "lines"
-            }];
-            // Define Layout 
-            const layout = {
-                xaxis: {
-                    title: "Date"
-                },
-                yaxis: {
-                    title: "Total Transaksi (juta rupiah)"
-                },
-                title: "Sales Over Time"
-            };
 
-            // Display using Plotly
-            Plotly.newPlot("myPlot", data, layout);
-        </script> --}}
-        {{-- chart --}}
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <script>
             // Fungsi untuk menghasilkan warna acak HEX
@@ -220,11 +196,12 @@
             }
 
             const xValues = {!! json_encode($dates) !!};
-            const yValues = {!! json_encode($totals) !!};
+            const yValues = {!! json_encode($totals) !!}; //total harga
             const barColors = generateRandomColors(yValues.length);
+            document.getElementById("myCharrt").style.width = `${yValues.length * 60}px`;
 
             new Chart("myCharrt", {
-                type: "bar",
+                type: "line",
                 data: {
                     labels: xValues,
                     datasets: [{
@@ -238,11 +215,33 @@
                     },
                     title: {
                         display: true,
-                        text: "TRANSAKSI"
+                        text: "HARGA"
+                    },
+                    animation: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            min: 0,
+                            max: 20000, // nilai maksimum tetap
+                            ticks: {
+                                stepSize: 5000 // jarak antar nilai
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: true
+                        }
                     }
                 }
             });
         </script>
+
+
+
         {{-- pagination --}}
         <script>
             $(document).ready(function() {

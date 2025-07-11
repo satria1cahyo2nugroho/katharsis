@@ -1,18 +1,9 @@
  <x-app-layout class="mb-8">
-     {{-- <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
-            {{ __('DASHBOARD') }}
-        </h2>
-    </x-slot>  --}}
-     <div class="container flex-auto">
-         <nav class="navbar navbar-expand-lg bg-body-tertiary m-3">
-             <div class="header">
-                 <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
-                     {{ __('DASHBOARD') }}
-                 </h2>
-             </div>
-         </nav>
-     </div>
+     <x-slot name="header">
+         <h2 class="font-semibold text-xl text-gray-800 leading-tight ">
+             {{ __('DASHBOARD') }}
+         </h2>
+     </x-slot>
      <div class="py-10">
          <div class="max-w-7xl mx-auto sm:px-6 lg:px-5">
              <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
