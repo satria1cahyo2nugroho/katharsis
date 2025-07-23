@@ -123,10 +123,10 @@ class Pengunjung extends Controller
         // $sha256Hash = hash('sha256', $combinedString);
 
         $qrCodeContent = json_encode([
-            'nama' => $transaksi->nama,
-            'harga' => $transaksi->harga,
-            'code' => $transaksi->snap_token,
-            'key' => $transaksi->sha256,
+            // 'nama' => $transaksi->nama,
+            // 'harga' => $transaksi->harga,
+            // 'code' => $transaksi->snap_token,
+            'nay' => $transaksi->sha256,
             // 'key' => $sha256Hash,
         ]);
         //alter the svg to bas64 because simpleqrcode need imagick and it's quite annoying because there was no solution

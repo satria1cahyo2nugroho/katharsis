@@ -75,15 +75,27 @@
         <script src="{{ asset('landpage/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('landpage/jquery/jquery3.7.1.min.js') }}"></script>
         <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
+            let lastAlertKey = null;
+            let lastAlertTime = 0;
+            const alertCooldown = 5000; // 5 detik, dalam ms
             function onScanSuccess(decodedText, decodedResult) {
                 let jsonData;
                 try {
                     jsonData = JSON.parse(decodedText);
                 } catch (error) {
                     console.error('Invalid JSON', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Invalid QR Code',
+                        text: 'QR code tidak sesuai format JSON.'
+                    });
                     return;
                 }
+
+                const currentKey = jsonData.nay ?? jsonData.key; // sesuaikan field QR-mu
+                const now = Date.now();
 
                 $.ajax({
                     url: '{{ route('validasi') }}',
@@ -93,27 +105,85 @@
                         data: jsonData
                     },
                     success: function(response) {
-                        let messageBox = $('#messageBox');
-                        messageBox.removeClass('alert-success alert-danger');
-                        if (response.success) {
-                            messageBox.addClass('alert alert-success');
-                            messageBox.text(response.message);
-                        } else {
-                            messageBox.addClass('alert alert-danger');
-                            messageBox.text(response.message);
+                        // ➤ Pop-up hanya muncul jika QR belum dipakai, atau cooldown sudah lewat
+                        if (currentKey !== lastAlertKey || now - lastAlertTime > alertCooldown) {
+                            lastAlertKey = currentKey;
+                            lastAlertTime = now;
+
+                            Swal.fire({
+                                icon: response.success ? 'success' : 'error',
+                                title: response.success ? 'Berhasil!' : 'Gagal!',
+                                text: response.message
+                            });
                         }
-                        messageBox.show();
-                        loadData(); // Load updated data
+
+                        loadData(); // Refresh data setelah validasi
                     },
                     error: function(error) {
                         console.error('AJAX error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Server Error',
+                            text: 'Terjadi kesalahan saat mengirim data.'
+                        });
                     }
                 });
             }
 
+            let lastFailureTime = 0;
+            const failureCooldown = 30000000; // dalam ms
+
             function onScanFailure(error) {
-                console.warn(`Code scan error = ${error}`);
+                const now = Date.now();
+                if (now - lastFailureTime < failureCooldown) return;
+                lastFailureTime = now;
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Scan Gagal',
+                    text: 'QR tidak terdeteksi. Arahkan kembali kamera.'
+                });
             }
+
+            // old scan 
+            // function onScanSuccess(decodedText, decodedResult) {
+            //     let jsonData;
+            //     try {
+            //         jsonData = JSON.parse(decodedText);
+            //     } catch (error) {
+            //         console.error('Invalid JSON', error);
+            //         return;
+            //     }
+
+            //     $.ajax({
+            //         url: '{{ route('validasi') }}',
+            //         method: 'POST',
+            //         data: {
+            //             _token: '{{ csrf_token() }}',
+            //             data: jsonData
+            //         },
+            //         success: function(response) {
+            //             let messageBox = $('#messageBox');
+            //             messageBox.removeClass('alert-success alert-danger');
+            //             if (response.success) {
+            //                 messageBox.addClass('alert alert-success');
+            //                 messageBox.text(response.message);
+            //             } else {
+            //                 messageBox.addClass('alert alert-danger');
+            //                 messageBox.text(response.message);
+            //             }
+            //             messageBox.show();
+            //             loadData(); // Load updated data
+            //         },
+            //         error: function(error) {
+            //             console.error('AJAX error:', error);
+            //         }
+            //     });
+            // }
+
+            // function onScanFailure(error) {
+            //     console.warn(`Code scan error = ${error}`);
+            // }
 
             function loadData() {
                 $.ajax({
