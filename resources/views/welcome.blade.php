@@ -418,24 +418,23 @@
                 </div>
             </div>
 
-            @php
-                $events = [
-                    ['image' => 'q.jpg', 'title' => 'Fully', 'desc' => 'Lore Ipsumx'],
-                    ['image' => 'w.jpg', 'title' => 'Updated', 'desc' => 'Lorem ipsum'],
-                    ['image' => 'e.jpg', 'title' => 'HJK', 'desc' => 'sadjhkajwhd'],
-                ];
-            @endphp
-
-            @foreach ($events as $index => $event)
+            @foreach ($banner as $index => $event)
                 <div class="row align-items-center mb-5">
                     <div class="col-lg-6 {{ $index % 2 === 0 ? 'order-lg-2' : '' }}">
-                        <img src="{{ asset('landpage/assets/image/' . $event['image']) }}"
-                            alt="{{ $event['title'] }}" class="img-fluid rounded shadow-sm">
+                        <div style="width:100%; height:360px; overflow:hidden;">
+                            <img src="{{ asset('storage/banner/' . $event->image) }}" alt="{{ $event->judul }}"
+                                style="width:100%; height:100%; object-fit:cover; border-radius:20px;"
+                                class="shadow-sm">
+                        </div>
                     </div>
                     <div class="col-lg-6 {{ $index % 2 === 0 ? 'order-lg-1' : '' }}">
-                        <div class="text-center px-4">
-                            <h3 class="fw-bold">{{ $event['title'] }}</h3>
-                            <p class="text-muted">{{ $event['desc'] }}</p>
+                        <div class="px-4 d-flex flex-column justify-content-center" style="height:450px;">
+                            <h2 class="fw-bold mb-3 text-center">{{ $event->judul }}</h2>
+                            <div style="max-height:250px; overflow-y:auto; padding-right:10px;">
+                                <p class="text-muted fs-5" style="line-height:1.6; text-align:justify;">
+                                    {{ $event->deskripsi }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>

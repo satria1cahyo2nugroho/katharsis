@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/admin/user', [AdminController::class, 'user_view'])->name('user-view');
     Route::get('/admin/klien', [AdminController::class, 'client_view'])->name('client-view');
     Route::get('/admin/transaksi', [AdminController::class, 'transaksi_view'])->name('transaksi-view');
+    Route::get('/admin/banner', [AdminController::class, 'banner_view'])->name('banner-view');
 });
 
 // action for CRUD for ADMIN
@@ -59,7 +60,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     // tamabh user
     Route::get('/admin/user/tambah', [AdminController::class, 'view_tambah_user'])->name('tambah-user');
     Route::post('/store-user', [AdminController::class, 'store_user'])->name('store-user');
-    // edit tiket
+    // edit
     Route::get('admin/user/edit-user/{id}', [AdminController::class, 'edit_user'])->name('user-edit');
     Route::put('/update-user/{id}', [AdminController::class, 'update_user'])->name('user-update');
     // delete user 
@@ -67,6 +68,16 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     // change status riwayat transaksi
     Route::delete('/ganti-status/{id}', [AdminController::class, 'ganti_status'])->name('ganti-status');
+
+    // banner and carousel
+    //delete banner
+    Route::delete('/delete-banner/{id}', [AdminController::class, 'delete_banner'])->name('banner-delete');
+    // tambah banner
+    Route::get('/admin/banner/tambah', [AdminController::class, 'v_add_banner'])->name('tambah-banner');
+    Route::post('/store-banner', [AdminController::class, 'store_banner'])->name('store-banner');
+    // edit banner
+    Route::get('admin/banner/edit-banner/{id}', [AdminController::class, 'edit_banner'])->name('banner-edit');
+    Route::put('/update-banner/{id}', [AdminController::class, 'update_banner'])->name('banner-update');
 });
 
 

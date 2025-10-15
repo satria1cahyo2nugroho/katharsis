@@ -33,6 +33,9 @@
                                 <x-nav-link :href="route('transaksi-view')" :active="request()->routeIs('transaksi-view')">
                                     {{ __('Transaksi') }}
                                 </x-nav-link>
+                                <x-nav-link :href="route('banner-view')" :active="request()->routeIs('banner-view')">
+                                    {{ __('Banner') }}
+                                </x-nav-link>
                             @break
 
                             @case('pengunjung')

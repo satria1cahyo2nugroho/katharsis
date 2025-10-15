@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\banner;
 use App\Models\User;
 use App\Models\Tiket;
 use App\Models\Transaksi;
@@ -112,9 +113,6 @@ class AdminController extends Controller
 
         return view('ademin.crud.tambah', compact('users'));
     }
-
-
-
 
     // menambahkan tiket
     public function store_tiket(Request $request)
@@ -375,5 +373,97 @@ class AdminController extends Controller
         $transaction->status = $request->input('status');
         $transaction->save();
         return redirect()->back()->with('success', 'Status updated successfully.');
+    }
+
+    public function banner_view()
+    {
+        $banner = banner::get();
+        return view('ademin.banner.data', compact('banner'));
+    }
+
+    public function delete_banner(Request $request, $id)
+    {
+        $baner = banner::find($id);
+
+        if ($baner) {
+            $baner->delete();
+        }
+
+        return redirect()->route('banner-view');
+    }
+
+    public function v_add_banner()
+    {
+        return view('ademin.banner.add');
+    }
+
+    public function store_banner(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+
+        $photo = $request->file('image');
+        $filename = date('Y-m-d') . '-' . $photo->getClientOriginalName();
+        $path = 'banner/' . $filename;
+
+        Storage::disk('public')->put($path, file_get_contents($photo));
+
+        $data = [
+            'judul'     => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'image'     => $filename,
+        ];
+
+        Banner::create($data);
+
+        return redirect()->route('banner-view');
+    }
+
+    public function edit_banner($id)
+    {
+
+        $bannerr = banner::find($id);
+
+        return view('ademin.banner.editban', compact('bannerr'));
+    }
+
+    public function update_banner(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'judul' => 'required',
+            'deskripsi' => 'required',
+            'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
+        $find = banner::find($id);
+
+        $bannerr['judul'] = $request->judul;
+        $bannerr['deskripsi'] = $request->deskripsi;
+
+        $photo = $request->file('image');
+        if ($request->hasFile('image')) {
+            $photo = $request->file('image');
+            $filename = date('Y-m-d') . '-' . $photo->getClientOriginalName();
+            $path = 'banner/' . $filename;
+
+            // Hapus gambar lama
+            Storage::disk('public')->delete('banner/' . $find->image);
+
+            // Simpan gambar baru
+            Storage::disk('public')->put($path, file_get_contents($photo));
+            $bannerr['image'] = $filename;
+        }
+        $find->update($bannerr);
+
+        return redirect()->route('banner-view');
     }
 }
