@@ -6,13 +6,10 @@ use App\Models\banner;
 use App\Models\User;
 use App\Models\Tiket;
 use App\Models\Transaksi;
-// use Image;
 use Illuminate\Http\Request;
-// use Intervention\Image\Image;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use Spatie\Permission\Models\Permission;
@@ -94,12 +91,6 @@ class AdminController extends Controller
 
         return view('ademin.crud.detail_tiket', compact('tiket'));
     }
-
-    // public function tambah_view()
-    // {
-    //     $pengunjung = User::role('client')->get();
-    //     return view('ademin.crud.tambah', compact('pengunjung'));
-    // }
     //  view tiket
     public function tambah_view()
     {
@@ -189,18 +180,6 @@ class AdminController extends Controller
             Storage::disk('public')->put($path, file_get_contents($photo));
             $tiket['image'] = $filename;
         }
-        // if ($photo) {
-        //     $filename = date('y-m-d') . $photo->getClientOriginalName();
-        //     $path = 'image-tiket/' . $filename;
-
-        //     if ($find->image) {
-        //         Storage::disk('public')->delete('image-tiket/' . $find->image);
-        //     }
-        //     Storage::disk('public')->put($path, file_get_contents($photo));
-        //     $tiket['image'] = $filename;
-        // }
-
-        // Tiket::whereId($id)->update($tiket);
         $find->update($tiket);
 
         return redirect()->route('tiket-view');
