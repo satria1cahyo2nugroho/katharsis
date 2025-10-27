@@ -413,7 +413,7 @@
             <div class="card shadow-sm mb-5">
                 <div class="card-header fw-bold bg-white">Khatarsis</div>
                 <div class="card-body text-center">
-                    <h2 class="display-6 text-success mb-1">Event yang Akan Datang</h2>
+                    <h2 class="display-6 text-success mb-1">Event Yang Akan Segera Hadir</h2>
                     <p class="text-muted">Range <cite title="Source Title">54Hz+</cite></p>
                 </div>
             </div>
